@@ -5,7 +5,7 @@ const Btech = () => {
   return (
     <div>
         <Navbar/>
-        <h1>Btech</h1>
+        <h1>Btech(Arnab)</h1>
     </div>
   )
 }
