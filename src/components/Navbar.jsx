@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className='flex justify-center items-center gap-5 text-gray-600'>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/')} >Home</div>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/guardian')}>Guardian</div>
-                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</div>
+                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/teachercourseok@24')}>Teacher</div>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</div>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</div>
             </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
                     <ul className='mx-2 z-1000 p-2 mt-2 flex flex-col gap-4 text-gray-600 bg-slate-200 py-5 rounded-md '>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/')}>Home</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/guardian')}>Guardian</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</li>
+                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teachercourseok@24')}>Teacher</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/student')}>Student LogIn</li>

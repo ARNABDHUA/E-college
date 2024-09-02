@@ -7,7 +7,7 @@ const Course = () => {
   return (
     <div>
         <Navbar/>
-        <section className='pt-10 mx-3'id='project'>
+        <section className='pt-5 mx-3 mb-4'id='project'>
         <h2 className='mb-8 text-center text-3xl lg:text-4xl'>Course</h2>
         <div className='flex  items-center justify-center px-0 sm:px-7'>
         <div className=' grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>

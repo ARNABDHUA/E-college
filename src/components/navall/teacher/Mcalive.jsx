@@ -11,27 +11,28 @@ const Mcalive = () => {
     
   }
   const [columns,setColumns]=useState([])
+  const [teacher,setTeacher]=useState("")
   const [records,setRecords]=useState([])
   useEffect(()=>{
-    axios.get('http://localhost:3000/mcavideos?sub=mcaLIVE')
+    axios.get('http://localhost:5000/api/products?sub=mcaLIVE')
     .then(res => {
-      setColumns(Object.keys(res.data[0]))
-      setRecords(res.data)
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
     })
     .catch(err=>console.log(err))
   },[])
 
   const submit=(e)=>{
     // e.preventDefault()
-    axios.post('http://localhost:3000/mcavideos',{"name":video,"link":link,"subtitle":papers,"sub":"mcaLIVE","time":time})
+    axios.post('http://localhost:5000/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mcaLIVE","time":time,"teacher":teacher})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
 
-  const handelDelete=(id)=>{
+  const handelDelete=(_id)=>{
     const confirm=window.confirm("Would you like to Delete?");
     if (confirm){
-      axios.delete(`http://localhost:3000/mcavideos/${id}`)
+      axios.delete(`http://localhost:5000/api/products/${_id}`)
       .then(res=>{
         alert("Data is Deleted successfully")
       })
@@ -43,7 +44,7 @@ const Mcalive = () => {
   const[link,setLink]=useState("");
   const [ak, setAk] = useState(MCA[0]['papers'][0]['videos']);
   const[ar,setAr]=useState([])
-  console.log(ak)
+  // console.log(ak)
   return (
     <div>
       <Navbar />
@@ -67,13 +68,15 @@ const Mcalive = () => {
             </select>
             </div>
             <h3 >ENTER TOPIC</h3>
-                <input type="text" name="video" id="video" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" value={video} onChange={(e)=>setVideo(e.target.value)} required />
+                <input type="text" name="video" id="video" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- Basic python" value={video} onChange={(e)=>setVideo(e.target.value)} required />
 
                 <h3 >TIME</h3>
-                <input type="text" name="time" id="time" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" value={time} onChange={(e)=>setTime(e.target.value)} required />
+                <input type="text" name="time" id="time" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- 10.00a.m" value={time} onChange={(e)=>setTime(e.target.value)} required />
 
                 <h3 >ENTER LINK</h3>
-                <input type="text" name="link" id="link" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" value={link} onChange={(e)=>setLink(e.target.value)} required />
+                <input type="text" name="link" id="link" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- https://www.google.com" value={link} onChange={(e)=>setLink(e.target.value)} required />
+                <h3 >ENTER YOUR NAME</h3>
+                <input type="text" name="time" id="time" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- P.B,R.S" value={teacher} onChange={(e)=>setTeacher(e.target.value)} required />
                 <div className=" flex justify-center items-center mt-4">
                 <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full '>submit</button>
                 </div>
@@ -85,18 +88,20 @@ const Mcalive = () => {
                   <table className=" table">
                     <thead>
                       <tr>
-                  <th>Name</th>
+                   <th>Name</th>
                   <th>Link</th>
+                  <th>Teacher</th>
                   <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                     {records.map((d,i)=>(
                       <tr key={i}>
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.name}{d.time}</td>
+                         <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300 ">{d.name}{d.time}</td>
                       
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300 cursor-pointer" onClick={(e)=>handelDelete(d.id)}>Del</td>
+                      <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
+                      <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
+                      <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>
                       </tr>
                     ))}
                   </tbody>

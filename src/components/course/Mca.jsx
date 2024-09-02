@@ -10,10 +10,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Mca = () => {
   const navigate= useNavigate();
+  const [columns,setColumns]=useState([])
   useEffect(()=>{
-    axios.get('http://localhost:3000/mcavideos?sub=mca')
+    axios.get('http://localhost:5000/api/products?sub=mca')
     .then(res => {
-      setTestvideo(res.data)
+      console.log(res.data.mydata);
+      setColumns(Object.keys(res.data.mydata))
+      setTestvideo(res.data.mydata)
     })
     .catch(err=>console.log(err))
   },[])

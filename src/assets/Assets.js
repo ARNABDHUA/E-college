@@ -75,18 +75,7 @@ export const PROJECTS = [
       title:"a",
       title1:"abc",
     },
-    {
-        id: 7,
-        name: "B.E",
-        name1:"B.E COURSE",
-        description:
-          "BE is Bachelor of Engineering. A four-year undergraduate curriculum is being offered.. This subject is taken by students hoping to become engineers.",
-        image: projectImage1,
-        Link: "/mba",
-        title:"b",
-        title1:"abc",
-      },
-
+    
       {
         id: 8,
         name: "JEE Main",

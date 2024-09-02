@@ -5,10 +5,10 @@ const Bcaclass = () => {
     const [columns,setColumns]=useState([])
   const [records,setRecords]=useState([])
   useEffect(()=>{
-    axios.get('http://localhost:3000/mcavideos?sub=bcaLIVE')
+    axios.get('http://localhost:5000/api/products?sub=bcaLIVE')
     .then(res => {
-      setColumns(Object.keys(res.data[0]))
-      setRecords(res.data)
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
     })
     .catch(err=>console.log(err))
   },[])
@@ -35,6 +35,7 @@ const Bcaclass = () => {
                           <tr>
                       <th>Topic</th>
                       <th>Name</th>
+                      <th>Teacher</th>
                       <th>Action</th>
                       </tr>
                       </thead>
@@ -44,6 +45,7 @@ const Bcaclass = () => {
                               <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.name}</td>
                           
                               <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
+                              <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
                               <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-red-500 cursor-pointer" onClick={()=>{
                         return(
                             window.open(d.link)
