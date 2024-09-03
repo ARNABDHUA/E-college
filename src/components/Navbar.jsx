@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../../public/logo.png'
 import { FaTimes } from 'react-icons/fa'
 import { FaBars } from 'react-icons/fa6'
@@ -7,6 +7,19 @@ import { FaSearch } from "react-icons/fa";
 const Navbar = () => {
     const[isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
     const navigate= useNavigate();
+    const [log,setLog]=useState(true)
+ 
+    const getlog=(e)=>
+        {const logp=localStorage.getItem('logs')
+        setLog(!log)
+        console.log(logp)
+        navigate('/student')
+    }
+    const update=()=>{
+        localStorage.removeItem('logs')
+        setLog(!log)
+    }
+ 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen)
     }
@@ -23,14 +36,15 @@ const Navbar = () => {
             <div className='flex justify-center items-center gap-5 text-gray-600'>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/')} >Home</div>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/guardian')}>Guardian</div>
-                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/teachercourseok@24')}>Teacher</div>
+                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</div>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</div>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</div>
             </div>
             {/* login */}
             <div className='flex justify-center items-center gap-3 m-2'>
             <FaSearch className=' cursor-pointer' onClick={()=> navigate('/search')}/>
-                <button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={()=> navigate('/student')}>Student LogIn</button>
+            {log?<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={getlog}>Student LogIn</button>
+                :<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={update}>Studnt LogOut</button>}
                 {/* change */}
                 <div className='cursor-pointer rounded-full h-10 w-10 bg-purple-700 text-white pl-3.5 pt-2' onClick={()=> navigate('/studentdashbord')}>A</div>
             </div>
@@ -64,7 +78,7 @@ const Navbar = () => {
                     <ul className='mx-2 z-1000 p-2 mt-2 flex flex-col gap-4 text-gray-600 bg-slate-200 py-5 rounded-md '>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/')}>Home</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/guardian')}>Guardian</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teachercourseok@24')}>Teacher</li>
+                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/student')}>Student LogIn</li>

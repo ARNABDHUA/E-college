@@ -5,7 +5,7 @@ import Guardian from './navall/Guardian'
 import Teacher from './navall/Teacher'
 import Admin from './navall/Admin'
 import Management from './navall/Management'
-import Student from './navall/Student'
+import Student from './navall/student/Student'
 import Studentdashbord from './navall/Studentdashbord'
 import Bca from './course/Bca'
 import Mca from './course/Mca'
@@ -26,6 +26,10 @@ import Mcalive from './navall/teacher/Mcalive'
 import Bcalive from './navall/teacher/Bcalive'
 import Bcaclass from './course/Bcaclass'
 import Mcaclass from './course/Mcaclass'
+import TeacherDashboard from './navall/admin/TeacherDashboard'
+import TeachersDataPage from './navall/admin/TeachersDataPage'
+import AdminDashboard from './navall/admin/AdminDashboard'
+import TeacherRegister from './navall/admin/TeacherRegister'
 const Display = () => {
   return (
     <div>
@@ -56,6 +60,10 @@ const Display = () => {
         <Route path='/bcaliveok@24' element={<Bcalive/>} />  
         <Route path='/bcaClassok@24@27' element={<Bcaclass/>} /> 
         <Route path='/mcaClassok@24@27' element={<Mcaclass/>} /> 
+        <Route path="/dashboard/:registerNumber" element={<TeacherDashboard />} />
+        <Route path="/teachers-data" element={<TeachersDataPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/teacher-register" element={<TeacherRegister />} />
       </Routes>
     </div>
   )
