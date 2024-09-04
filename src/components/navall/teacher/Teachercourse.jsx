@@ -2,11 +2,12 @@ import React from 'react'
 import Navbar from '../../../components/Navbar'
 import { Tcourse } from '../../../assets/Assets'
 import { useNavigate } from 'react-router-dom';
+import TeacherNav from '../../TeacherNav';
 const Teachercourse = () => {
     const navigate= useNavigate();
   return (
     <div>
-        <Navbar/>
+        <TeacherNav/>
         <section className='pt-10 mx-3 mb-4'id='project'>
         <h2 className='mb-8 text-center text-3xl lg:text-4xl'>Course(Teacher)</h2>
         <div className='flex  items-center justify-center px-0 sm:px-7'>

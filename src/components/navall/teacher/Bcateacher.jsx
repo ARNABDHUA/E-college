@@ -5,6 +5,7 @@ import axios from "axios";
 import {bcaPaper} from '../../../assets/mcadata'
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import TeacherNav from "../../TeacherNav";
 const Bcateacher = () => {
   const[papers,setPapers]=useState("")
   const navigate= useNavigate();
@@ -27,7 +28,8 @@ const Bcateacher = () => {
 
   const submit=(e)=>{
     // e.preventDefault()
-    axios.post('http://localhost:5000/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bca","time":"00","teacher":teacher})
+    const tname = localStorage.getItem('teachername');
+    axios.post('http://localhost:5000/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bca","time":"00","teacher":tname})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
@@ -51,7 +53,7 @@ const Bcateacher = () => {
   console.log(ak)
   return (
     <div>
-      <Navbar />
+      <TeacherNav/>
         <div className=" flex justify-center items-center p-4 ">
         <h1 className="text-xl text-black">Add Data(BCA)</h1>
         </div>
@@ -76,8 +78,8 @@ const Bcateacher = () => {
 
                 <h3 >ENTER LINK</h3>
                 <input type="text" name="link" id="link" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- https://www.google.com" value={link} onChange={(e)=>setLink(e.target.value)} required />
-                <h3 >ENTER YOUR NAME</h3>
-                <input type="text" name="video" id="video" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- P.B,R.S" value={teacher} onChange={(e)=>setTeacher(e.target.value)} required />
+                {/* <h3 >ENTER YOUR NAME</h3>
+                <input type="text" name="video" id="video" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- P.B,R.S" value={teacher} onChange={(e)=>setTeacher(e.target.value)} required /> */}
 
                 <div className=" flex justify-center items-center mt-4">
                 <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full '>submit</button>

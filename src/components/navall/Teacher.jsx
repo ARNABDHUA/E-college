@@ -30,6 +30,7 @@ const Teacher = () => {
       const response = await axios.post('http://localhost:5000/api/signin-teacher', formData);
       if (response.data.success) {
         setSuccessMessage('Sign-in successful!');
+        localStorage.setItem("teacherlogs",JSON.stringify(formData.registerNumber))
         navigate('/teachercourseok@24');
       } else {
         setErrorMessage('Invalid registration number or password.');

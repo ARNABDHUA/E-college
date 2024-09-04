@@ -3,6 +3,7 @@ import Navbar from "../../Navbar";
 import { MCA } from "../../../assets/Assets";
 import axios from "axios";
 import {bcaPaper} from '../../../assets/mcadata'
+import TeacherNav from "../../TeacherNav";
 const Bcalive = () => {
   const[papers,setPapers]=useState("")
   const changePaper=(event)=>{
@@ -25,7 +26,8 @@ const Bcalive = () => {
 
   const submit=(e)=>{
     // e.preventDefault()
-    axios.post('http://localhost:5000/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bcaLIVE","time":time,"teacher":teacher})
+    const tname = localStorage.getItem('teachername');
+    axios.post('http://localhost:5000/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bcaLIVE","time":time,"teacher":tname})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
@@ -47,7 +49,7 @@ const Bcalive = () => {
   console.log(ak)
   return (
     <div>
-      <Navbar />
+      <TeacherNav/>
         <div className=" flex justify-center items-center p-4 ">
         <h1 className="text-xl text-black">LIVE CLASS(BCA)</h1>
         </div>
@@ -75,8 +77,8 @@ const Bcalive = () => {
 
                 <h3 >ENTER LINK</h3>
                 <input type="text" name="link" id="link" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- https://www.google.com" value={link} onChange={(e)=>setLink(e.target.value)} required />
-                <h3 >ENTER YOUR NAME</h3>
-                <input type="text" name="time" id="time" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- P.B,R.S" value={teacher} onChange={(e)=>setTeacher(e.target.value)} required />
+                {/* <h3 >ENTER YOUR NAME</h3>
+                <input type="text" name="time" id="time" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- P.B,R.S" value={teacher} onChange={(e)=>setTeacher(e.target.value)} required /> */}
 
                 <div className=" flex justify-center items-center mt-4">
                 <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full '>submit</button>

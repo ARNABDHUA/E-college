@@ -4,17 +4,35 @@ import { FaTimes } from 'react-icons/fa'
 import { FaBars } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
-const Navbar = () => {
+import axios from 'axios';
+const TeacherNav = () => {
     const[isMobileMenuOpen,setIsMobileMenuOpen]=useState(false)
     const navigate= useNavigate();
     const [log,setLog]=useState(true)
+    const [errorMessage, setErrorMessage] = useState('');
     const [l,setL]=useState("A")
     useEffect(()=>{
-        const logos=localStorage.getItem('logs')
-        if(logos!==null){
-        const p = JSON.parse(logos);
-        let k= p.slice(0, 1);
-        setL(k)}
+     
+
+        const fetchData = async () => {
+            try {
+              const logp = localStorage.getItem('teacherlogs');
+              if(logp!==null){
+              const p = JSON.parse(logp);
+              const studentRes = await axios.get(`http://localhost:5000/api/teachers?registerNumber=${p}`);
+              const teacher = studentRes.data.teachers.map(e => e.name);
+              localStorage.setItem("teachername",JSON.stringify(teacher))
+              let k= teacher.slice(0, 1);
+              setL(k);
+              }
+            } catch (err) {
+              setErrorMessage('Failed to fetch data. Please try again.');
+              console.error(err);
+            } 
+          };
+      
+          fetchData();
+
     },[])
     const getlog=(e)=>
         {
@@ -97,4 +115,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default TeacherNav

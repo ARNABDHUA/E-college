@@ -11,27 +11,42 @@ import { useNavigate } from 'react-router-dom';
 const Mca = () => {
   const navigate= useNavigate();
   const [columns,setColumns]=useState([])
-  useEffect(()=>{
-    axios.get('http://localhost:5000/api/products?sub=mca')
-    .then(res => {
-      console.log(res.data.mydata);
-      setColumns(Object.keys(res.data.mydata))
-      setTestvideo(res.data.mydata)
-    })
-    .catch(err=>console.log(err))
-  },[])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/products?sub=bca');
+        setColumns(Object.keys(res.data.mydata));
+        setTestVideo(res.data.mydata);
+
+        const logp = localStorage.getItem('logs');
+        const p = JSON.parse(logp);
+        const studentRes = await axios.get(`http://localhost:5000/api/students?email=${p}`);
+        const student = studentRes.data.students.find(e => e.mca);
+        setLock(student ? student.bca : false);
+      } catch (err) {
+        setErrorMessage('Failed to fetch data. Please try again.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const[sem,setSem]=useState("--sem--")
   const[paper,setPaper]=useState("--paper--")
   const[video,setVideo]=useState("--video--")
   const[link,setLink]=useState(false)
   const[lock,setLock]=useState(false)
-  const[testvideo,setTestvideo]=useState([])
+  const [loading, setLoading] = useState(true);
+  const[testvideo,setTestVideo]=useState([])
   const[papers,setPapers]=useState([])
   const[videos,setVideos]=useState([])
   const[show,setShow]=useState(false)
   const[question,setQuestion]=useState('')
   const[answer,setAnswer]=useState('')
+  const [errorMessage, setErrorMessage] = useState('');
   const changeSem=(event)=>{
     setSem(event.target.value)
     setPapers(mcaPaper.filter(sem=>sem.title===event.target.value))
@@ -54,6 +69,24 @@ const Mca = () => {
     const test=(response['data']['candidates'][0]['content']['parts'][0]['text']).split('**');
     setAnswer(test)
   }
+
+  const handleSubscription = async () => {
+    try {
+      const logp = localStorage.getItem('logs');
+      const p = JSON.parse(logp);
+      await axios.put(`http://localhost:5000/api/student/${p}`, { "mca": true });
+      setLock(true);
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage('Subscription failed. Please try again.');
+      console.error(error);
+    }
+  };
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+
   return (
     <div>
         <Navbar/>
@@ -94,27 +127,36 @@ const Mca = () => {
               ))}
             </select>
             </div>
-            {lock? link?<div className='lg:hidden mt-4 mb-4'>
-              <ReactPlayer url={video} controls={true} width={300} height={250}/>
-            </div> :<h2 className='mt-3 mb-3' >Select Video</h2>:<h2 className='mt-3 mb-3'>You need to subscribe</h2>}
-            {lock? link?<div className='lg:block hidden mt-4 mb-4'>
-              <ReactPlayer url={video} controls={true} width={720} height={480}/>
-            </div>:"" :""}
-            
-            {lock?<button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full ' onClick={()=> navigate('/mcaClassok@24@27')}>Live-Class</button>:""}
-
-            <h2 className=' my-2 hero-ag-color p-2 rounded-3xl cursor-pointer mb-4' onClick={()=>setShow(!show)}>Ai Chat Bot</h2>
-
-
-           { lock?show?<div className=' flex flex-col items-center gap-3'>
-              <textarea value={question} onChange={(e)=>setQuestion(e.target.value)} cols="30" rows="10" className=' w-60 sm:w-[600px] rounded-xl'></textarea>
-              <button className='bg-primary text-white bg-black cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mb-3' onClick={generateAnswer}>Generate Answer</button>
-              <p className='p-4'>{answer}</p>
-            </div>:"":""}
-          
-            {lock?"":<button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full ' onClick={()=>setLock(true)}>
-              subscribe
-            </button>}
+            {lock && link ? (
+                  <div className="mt-4 mb-4">
+                    <ReactPlayer url={video} controls width="100%" height="100%" />
+                  </div>
+                ) : !lock ? (
+                  <h2 className="mt-3 mb-3">You need to subscribe</h2>
+                ) : (
+                  <h2 className="mt-3 mb-3">Select Video</h2>
+                )}
+                {lock && (
+                  <button className="bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full" onClick={() => navigate('/mcaClassok@24@27')}>
+                    Live-Class
+                  </button>
+                )}
+                <h2 className="my-2 hero-ag-color p-2 rounded-3xl cursor-pointer mb-4" onClick={() => setShow(!show)}>AI Chat Bot</h2>
+                {lock && show && (
+                  <div className="flex flex-col items-center gap-3">
+                    <textarea value={question} onChange={(e) => setQuestion(e.target.value)} cols="30" rows="10" className="w-60 sm:w-[600px] rounded-xl"></textarea>
+                    <button className="bg-primary text-white bg-black cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mb-3" onClick={generateAnswer}>
+                      Generate Answer
+                    </button>
+                    <p className="p-4">{answer}</p>
+                  </div>
+                )}
+                {!lock && (
+                  <button className="bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full" onClick={handleSubscription}>
+                    Subscribe
+                  </button>
+                )}
+                {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
 
        </div> 
