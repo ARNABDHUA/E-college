@@ -38,7 +38,7 @@ const Mca = () => {
   const[paper,setPaper]=useState("--paper--")
   const[video,setVideo]=useState("--video--")
   const[link,setLink]=useState(false)
-  const[lock,setLock]=useState(false)
+  const[lock,setLock]=useState('')
   const [loading, setLoading] = useState(true);
   const[testvideo,setTestVideo]=useState([])
   const[papers,setPapers]=useState([])
