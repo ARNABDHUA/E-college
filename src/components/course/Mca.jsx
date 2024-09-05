@@ -14,7 +14,7 @@ const Mca = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://courseapi-3kus.onrender.com/api/products?sub=bca');
+        const res = await axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mca');
         setColumns(Object.keys(res.data.mydata));
         setTestVideo(res.data.mydata);
 
