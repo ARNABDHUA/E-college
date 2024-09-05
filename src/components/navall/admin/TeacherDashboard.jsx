@@ -27,7 +27,7 @@ const TeacherDashboard = () => {
     // Fetch teacher data by registration number
     const fetchTeacherData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/teacher/${registerNumber}`);
+        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/teacher/${registerNumber}`);
         setTeacherData(response.data);
       } catch (error) {
         setErrorMessage('Failed to fetch teacher data.');

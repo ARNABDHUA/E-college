@@ -65,7 +65,7 @@ const EditTeacherForm = ({ teacher, onClose, onUpdate }) => {
     setError('');
 
     try {
-      const response = await fetch(`http://localhost:5000/api/teacher/${teacher.registerNumber}`, {
+      const response = await fetch(`https://courseapi-3kus.onrender.com/api/teacher/${teacher.registerNumber}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),

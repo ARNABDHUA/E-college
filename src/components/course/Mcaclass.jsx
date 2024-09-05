@@ -5,7 +5,7 @@ const Bcaclass = () => {
     const [columns,setColumns]=useState([])
   const [records,setRecords]=useState([])
   useEffect(()=>{
-    axios.get('http://localhost:5000/api/products?sub=mcaLIVE')
+    axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mcaLIVE')
     .then(res => {
       setColumns(Object.keys(res.data.mydata))
       setRecords(res.data.mydata)

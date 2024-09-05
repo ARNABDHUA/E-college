@@ -14,7 +14,7 @@ const Admin = () => {
   const handleAdminAuth = async () => {
   
     try {
-      const response = await fetch('http://localhost:5000/api/admin-auth', {
+      const response = await fetch('https://courseapi-3kus.onrender.com/api/admin-auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ adminId, adminPassword }),

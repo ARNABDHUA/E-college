@@ -12,7 +12,7 @@ const TeachersDataPage = () => {
     const fetchTeachers = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:5000/api/teachers');
+        const response = await fetch('https://courseapi-3kus.onrender.com/api/teachers');
         const data = await response.json();
 
         if (response.ok) {
@@ -43,7 +43,7 @@ const TeachersDataPage = () => {
   const handleDelete = async (registerNumber) => {
     if (window.confirm('Are you sure you want to delete this teacher?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/teacher/${registerNumber}`, {
+        const response = await fetch(`https://courseapi-3kus.onrender.com/api/teacher/${registerNumber}`, {
           method: 'DELETE',
         });
 

@@ -29,7 +29,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/signin-student', formData);
+      const response = await axios.post('https://courseapi-3kus.onrender.com/api/signin-student', formData);
       if (response.data.success) {
         setSuccessMessage('Sign-in successful!');
         localStorage.setItem("logs",JSON.stringify(formData.email))

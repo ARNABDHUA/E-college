@@ -27,7 +27,7 @@ const Teacher = () => {
     setSuccessMessage('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/signin-teacher', formData);
+      const response = await axios.post('https://courseapi-3kus.onrender.com/api/signin-teacher', formData);
       if (response.data.success) {
         setSuccessMessage('Sign-in successful!');
         localStorage.setItem("teacherlogs",JSON.stringify(formData.registerNumber))

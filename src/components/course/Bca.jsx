@@ -26,13 +26,13 @@ const Bca = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products?sub=bca');
+        const res = await axios.get('https://courseapi-3kus.onrender.com/api/products?sub=bca');
         setColumns(Object.keys(res.data.mydata));
         setTestVideo(res.data.mydata);
 
         const logp = localStorage.getItem('logs');
         const p = JSON.parse(logp);
-        const studentRes = await axios.get(`http://localhost:5000/api/students?email=${p}`);
+        const studentRes = await axios.get(`https://courseapi-3kus.onrender.com/api/students?email=${p}`);
         const student = studentRes.data.students.find(e => e.bca);
         setLock(student ? student.bca : false);
       } catch (err) {
@@ -64,7 +64,7 @@ const Bca = () => {
   const generateAnswer = async () => {
     setAnswer('Loading...');
     try {
-      const response = await axios.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=API_KEY', {
+      const response = await axios.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyCAEbKVzd8GkiF4oXqtZOLzYzByakMijaU', {
         "contents": [{"parts": [{"text": question}]}],
       });
       const generatedAnswer = response.data.candidates[0].content.parts[0].text.split('**');
@@ -79,7 +79,7 @@ const Bca = () => {
     try {
       const logp = localStorage.getItem('logs');
       const p = JSON.parse(logp);
-      await axios.put(`http://localhost:5000/api/student/${p}`, { "bca": true });
+      await axios.put(`https://courseapi-3kus.onrender.com/api/student/${p}`, { "bca": true });
       setLock(true);
       setErrorMessage('');
     } catch (error) {

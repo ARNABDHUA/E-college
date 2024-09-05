@@ -18,7 +18,7 @@ const Mcateacher = () => {
   const[teacher,setTeacher]=useState("")
   const [records,setRecords]=useState([])
   useEffect(()=>{
-    axios.get('http://localhost:5000/api/products?sub=mca')
+    axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mca')
     .then(res => {
       setColumns(Object.keys(res.data.mydata))
       setRecords(res.data.mydata)
@@ -29,7 +29,7 @@ const Mcateacher = () => {
   const submit=(e)=>{
     // e.preventDefault()
     const tname = localStorage.getItem('teachername');
-    axios.post('http://localhost:5000/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mca","time":"00","teacher":tname})
+    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mca","time":"00","teacher":tname})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
@@ -37,7 +37,7 @@ const Mcateacher = () => {
   const handelDelete=(_id)=>{
     const confirm=window.confirm("Would you like to Delete?");
     if (confirm){
-      axios.delete(`http://localhost:5000/api/products/${_id}`)
+      axios.delete(`https://courseapi-3kus.onrender.com/api/products/${_id}`)
       .then(res=>{
         alert("Data is Deleted successfully")
       })

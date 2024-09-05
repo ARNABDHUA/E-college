@@ -12,7 +12,7 @@ const SignUp = ({ onSignUp }) => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/students');
+        const response = await axios.get('https://courseapi-3kus.onrender.com/api/students');
         setStudents(response.data.students);
       } catch (error) {
         console.error('Error fetching students:', error);
@@ -31,7 +31,7 @@ const SignUp = ({ onSignUp }) => {
       alert('Email already exists');
     } else {
       try {
-        await axios.post('http://localhost:5000/api/register-student', {
+        await axios.post('https://courseapi-3kus.onrender.com/api/register-student', {
           name,
           email,
           password,

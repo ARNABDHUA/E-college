@@ -19,7 +19,7 @@ const TeacherNav = () => {
               const logp = localStorage.getItem('teacherlogs');
               if(logp!==null){
               const p = JSON.parse(logp);
-              const studentRes = await axios.get(`http://localhost:5000/api/teachers?registerNumber=${p}`);
+              const studentRes = await axios.get(`https://courseapi-3kus.onrender.com/api/teachers?registerNumber=${p}`);
               const teacher = studentRes.data.teachers.map(e => e.name);
               localStorage.setItem("teachername",JSON.stringify(teacher))
               let k= teacher.slice(0, 1);

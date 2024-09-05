@@ -64,7 +64,7 @@ const TeacherRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('http://localhost:5000/api/register-teacher', formData);
+        const response = await axios.post('https://courseapi-3kus.onrender.com/api/register-teacher', formData);
       setRegisterNumber(response.data.registerNumber); // Assuming the server returns the register number
       alert('Teacher registered successfully!');
     } catch (error) {
