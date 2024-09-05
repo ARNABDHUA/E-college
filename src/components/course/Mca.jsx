@@ -22,7 +22,7 @@ const Mca = () => {
         const p = JSON.parse(logp);
         const studentRes = await axios.get(`https://courseapi-3kus.onrender.com/api/students?email=${p}`);
         const student = studentRes.data.students.find(e => e.mca);
-        setLock(student ? student.bca : false);
+        setLock(student ? student.mca : false);
       } catch (err) {
         setErrorMessage('Failed to fetch data. Please try again.');
         console.error(err);
