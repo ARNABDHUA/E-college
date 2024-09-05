@@ -134,8 +134,9 @@ const Bca = () => {
                   <div className="mt-4 mb-4">
                     <ReactPlayer url={video} controls width="100%" height="100%" />
                   </div>
-                ) : !lock ? (
+                ) : !lock ? (<>
                   <h2 className="mt-3 mb-3">You need to subscribe</h2>
+                  <h3 className="mt-3 mb-3">LogIn before subscribe</h3></>
                 ) : (
                   <h2 className="mt-3 mb-3">Select Video</h2>
                 )}
