@@ -10,6 +10,7 @@ const Teacher = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ const Teacher = () => {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
+    setIsLoading(true);
 
     try {
       const response = await axios.post('https://courseapi-3kus.onrender.com/api/signin-teacher', formData);
@@ -74,8 +76,9 @@ const Teacher = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300 focus:outline-none"
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
           {errorMessage && (
             <p className="text-red-500 text-sm mt-4 text-center">{errorMessage}</p>

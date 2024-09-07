@@ -7,6 +7,7 @@ import {mcaSem} from '../../assets/mcadata.js'
 import {mcaPaper} from '../../assets/mcadata.js'
 import {mcavideos} from '../../assets/mcadata.js'
 import { useNavigate } from 'react-router-dom';
+import HashLoader  from "react-spinners/HashLoader"
 
 const Mca = () => {
   const navigate= useNavigate();
@@ -84,7 +85,14 @@ const Mca = () => {
   };
 
   if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return (<div className=' flex justify-center items-center mt-10'>
+      <HashLoader  
+    loading={loading}
+    size={50}
+    aria-label="Loading Spinner"
+    data-testid="loader"
+    />
+    </div>)
   }
 
   return (

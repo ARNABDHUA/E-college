@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { bcaSem, bcaPaper } from '../../assets/mcadata.js';
 import { useNavigate } from 'react-router-dom';
+import HashLoader  from "react-spinners/HashLoader"
 
 const Bca = () => {
   const navigate = useNavigate();
@@ -89,9 +90,15 @@ const Bca = () => {
   };
 
   if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return (<div className=' flex justify-center items-center mt-10'>
+      <HashLoader  
+    loading={loading}
+    size={50}
+    aria-label="Loading Spinner"
+    data-testid="loader"
+    />
+    </div>)
   }
-
   return (
     <div>
       <Navbar />
