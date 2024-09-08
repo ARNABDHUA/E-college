@@ -13,3 +13,8 @@
 <FilesMatch "^\.">
   Require all denied
 </FilesMatch>
+
+# Cache control for static resources
+<FilesMatch "\.(js|jsx|css|jpg|png|gif|ico|svg)$">
+  Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
