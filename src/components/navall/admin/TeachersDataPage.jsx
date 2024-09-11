@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EditTeacherForm from './EditTeacherForm'; // Import the new component
 import Navbar from '../../Navbar';
-
+import HashLoader  from "react-spinners/HashLoader"
 const TeachersDataPage = () => {
   const [teachers, setTeachers] = useState([]);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -68,7 +68,14 @@ const TeachersDataPage = () => {
       <h1 className="text-2xl font-bold mb-4">Teachers Data</h1>
 
       {loading ? (
-        <p className="text-blue-500">Loading...</p>
+        <div className=' flex justify-center items-center mt-10'>
+        <HashLoader  
+      loading={loading}
+      size={50}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+      />
+      </div>
       ) : error ? (
         <div>
           <p className="text-red-500 mb-4">{error}</p>
@@ -80,7 +87,8 @@ const TeachersDataPage = () => {
           </button>
         </div>
       ) : (
-        <table className="min-w-full bg-gray-700 border border-gray-600 rounded-lg overflow-hidden">
+        <div className='flex overflow-auto'>
+        <table className="min-w-full bg-gray-700 border border-gray-600 rounded-lg overflow-hidden ">
           <thead>
             <tr className="bg-gray-600">
               <th className="py-2 px-4 border-b border-gray-500">Register Number</th>
@@ -124,6 +132,7 @@ const TeachersDataPage = () => {
             })}
           </tbody>
         </table>
+        </div>
       )}
 
       {selectedTeacher && (

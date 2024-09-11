@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import HashLoader  from "react-spinners/HashLoader"
 const Teacher = () => {
   const [formData, setFormData] = useState({
     registerNumber: '',
     password: '',
   });
-
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ const Teacher = () => {
     setErrorMessage('');
     setSuccessMessage('');
     setIsLoading(true);
-
+    setLoading(true);
     try {
       const response = await axios.post('https://courseapi-3kus.onrender.com/api/signin-teacher', formData);
       if (response.data.success) {
@@ -44,13 +44,28 @@ const Teacher = () => {
         setErrorMessage('An error occurred. Please try again.');
       }
     }
+    finally {
+      setLoading(false);
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
         <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">Teacher Sign In</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+
+        {loading ? (
+        <div className=' flex justify-center items-center mt-10'>
+        <HashLoader  
+      loading={loading}
+      size={50}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+      />
+      </div>
+      ) :
+          (<form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">Registration Number</label>
             <input
@@ -86,7 +101,8 @@ const Teacher = () => {
           {successMessage && (
             <p className="text-green-500 text-sm mt-4 text-center">{successMessage}</p>
           )}
-        </form>
+        </form>)}
+
       </div>
     </div>
   );

@@ -14,18 +14,18 @@ const Navbar = () => {
         if(logos!==null){
         const p = JSON.parse(logos);
         let k= p.slice(0, 1);
-        setL(k)}
+        setL(k)
+        setLog(false)
+    }
     },[])
     const getlog=(e)=>
         {
             const logp=localStorage.getItem('logs')
-        setLog(!log)
-        console.log(logp)
         navigate('/student')
     }
     const update=()=>{
         localStorage.removeItem('logs')
-        setLog(!log)
+        setLog(true)
     }
  
     const toggleMobileMenu = () => {
@@ -89,7 +89,8 @@ const Navbar = () => {
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/student')}>Student LogIn</li>
+                        {log?<li className='hover:text-black cursor-pointer' onClick={getlog}>Student LogIn</li>
+                :<li className='hover:text-black cursor-pointer' onClick={update}>Studnt LogOut</li>}
                     </ul>
                 )}
             </div>

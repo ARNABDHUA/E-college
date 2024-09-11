@@ -1,18 +1,19 @@
 import React, { useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../Navbar";
-
-
+import HashLoader  from "react-spinners/HashLoader"
 const Admin = () => {
-
+  
   const navigate = useNavigate();
-
+  
+  const [loading, setLoading] = useState(false);
   const [adminId, setAdminId] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
   const [authError, setAuthError] = useState('');
 
   const handleAdminAuth = async () => {
   
+    setLoading(true);
     try {
       const response = await fetch('https://courseapi-3kus.onrender.com/api/admin-auth', {
         method: 'POST',
@@ -31,6 +32,9 @@ const Admin = () => {
       console.error("Error authenticating admin:", error);
       setAuthError('Server error, please try again later.');
     }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,7 +42,18 @@ const Admin = () => {
       <Navbar />
       <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
         <h3 className="text-3xl font-bold mb-8 text-gray-800">Admin Login</h3>
-        <div className="bg-white shadow-lg rounded-lg p-8 w-96">
+
+       {loading ? (
+        <div className=' flex justify-center items-center mt-10'>
+        <HashLoader  
+      loading={loading}
+      size={50}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+      />
+      </div>
+      ) :
+        (<div className="bg-white shadow-lg rounded-lg p-8 w-96">
           <div className="mb-6">
             <label htmlFor="id" className="block text-gray-700 font-medium mb-2">
               Admin ID
@@ -70,7 +85,8 @@ const Admin = () => {
           <button onClick={handleAdminAuth} className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
             Login
           </button>
-        </div>
+        </div>)}
+
       </div>
     </>
   );

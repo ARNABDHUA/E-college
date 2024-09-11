@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import HashLoader  from "react-spinners/HashLoader"
 const SignUp = ({ onSignUp }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ const SignUp = ({ onSignUp }) => {
   const [phone, setPhone] = useState('');
   const [students, setStudents] = useState([]);
   const [guardian,setGuardian]=useState('')
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchStudents = async () => {
@@ -24,11 +26,12 @@ const SignUp = ({ onSignUp }) => {
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-
+    setLoading(true);
     const isEmailExist = students.some((student) => student.email === email);
 
     if (isEmailExist) {
       alert('Email already exists');
+      navigate('/');
     } else {
       try {
         await axios.post('https://courseapi-3kus.onrender.com/api/register-student', {
@@ -39,10 +42,14 @@ const SignUp = ({ onSignUp }) => {
           phonenumber: phone,
         });
         alert('Registered successfully!');
-        onSignUp();
+        navigate('/');
+        
       } catch (error) {
         console.error('Error registering student:', error);
         alert('Error registering');
+      }
+      finally {
+        setLoading(false)
       }
     }
   };
@@ -51,7 +58,18 @@ const SignUp = ({ onSignUp }) => {
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+
+       { loading ? (
+        <div className=' flex justify-center items-center mt-10'>
+        <HashLoader  
+      loading={loading}
+      size={50}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+      />
+      </div>
+      ) :
+       (<form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
             <input
@@ -113,7 +131,8 @@ const SignUp = ({ onSignUp }) => {
           >
             Sign Up
           </button>
-        </form>
+        </form>)}
+
       </div>
     </div>
   );
