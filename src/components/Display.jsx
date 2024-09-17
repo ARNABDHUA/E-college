@@ -30,6 +30,8 @@ import TeacherDashboard from './navall/admin/TeacherDashboard'
 import TeachersDataPage from './navall/admin/TeachersDataPage'
 import AdminDashboard from './navall/admin/AdminDashboard'
 import TeacherRegister from './navall/admin/TeacherRegister'
+import Mcaexam from './course/Mcaexam'
+import Mcateacherexam from './navall/teacher/Mcateacherexam'
 const Display = () => {
   return (
     <div>
@@ -64,6 +66,8 @@ const Display = () => {
         <Route path="/teachers-data" element={<TeachersDataPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/teacher-register" element={<TeacherRegister />} />
+        <Route path="/mcaeaxm@24" element={<Mcaexam/>} />
+        <Route path="/mcateachereaxm@24" element={<Mcateacherexam/>} />
       </Routes>
     </div>
   )

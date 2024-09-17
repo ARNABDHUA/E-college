@@ -79,7 +79,7 @@ const Mca = () => {
       setLock(true);
       setErrorMessage('');
     } catch (error) {
-      setErrorMessage('Subscription failed. Please try again.');
+      setErrorMessage('Subscription failed. Please Login.');
       console.error(error);
     }
   };
@@ -145,10 +145,14 @@ const Mca = () => {
                 ) : (
                   <h2 className="mt-3 mb-3">Select Video</h2>
                 )}
-                {lock && (
+                {lock && (<div className='flex flex-col gap-4'>
                   <button className="bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full" onClick={() => navigate('/mcaClassok@24@27')}>
                     Live-Class
                   </button>
+                  <button className="bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full" onClick={() => navigate('/mcaeaxm@24')}>
+                    Exam
+                  </button>
+                  </div>
                 )}
                 <h2 className="my-2 hero-ag-color p-2 rounded-3xl cursor-pointer mb-4" onClick={() => setShow(!show)}>AI Chat Bot</h2>
                 {lock && show && (

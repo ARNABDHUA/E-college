@@ -27,7 +27,9 @@ const TeacherDashboard = () => {
     // Fetch teacher data by registration number
     const fetchTeacherData = async () => {
       try {
-        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/teacher/${registerNumber}`);
+        const logp = localStorage.getItem('teacherlogs');
+        const p = JSON.parse(logp);
+        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/teacher/${p}`);
         setTeacherData(response.data);
       } catch (error) {
         setErrorMessage('Failed to fetch teacher data.');
@@ -37,7 +39,7 @@ const TeacherDashboard = () => {
     };
 
     fetchTeacherData();
-  }, [registerNumber]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -57,7 +59,7 @@ const TeacherDashboard = () => {
 
   return (
     <div className={`flex flex-col items-center justify-center min-h-screen p-6 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} transition-colors duration-300`}>
-      <div className="flex justify-between w-full max-w-4xl p-4">
+      <div className="flex justify-center gap-4 w-full max-w-4xl p-4">
         <h1 className={`text-3xl sm:text-4xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-800'} transition-colors duration-300`}>
           Teacher Dashboard
         </h1>
@@ -75,6 +77,7 @@ const TeacherDashboard = () => {
           <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-indigo-600 dark:text-indigo-400">
             Registered Data
           </h2>
+        <div className='flex overflow-auto'>
           <table className="w-full border-collapse">
             <thead>
               <tr>
@@ -99,6 +102,7 @@ const TeacherDashboard = () => {
               ))}
             </tbody>
           </table>
+                </div>
         </div>
       ) : (
         <div className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>No data available.</div>

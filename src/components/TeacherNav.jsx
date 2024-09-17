@@ -11,6 +11,7 @@ const TeacherNav = () => {
     const [log,setLog]=useState(true)
     const [errorMessage, setErrorMessage] = useState('');
     const [l,setL]=useState("A")
+    const [check,setCheck]=useState(null)
     useEffect(()=>{
      
 
@@ -22,8 +23,11 @@ const TeacherNav = () => {
               const studentRes = await axios.get(`https://courseapi-3kus.onrender.com/api/teachers?registerNumber=${p}`);
               const teacher = studentRes.data.teachers.map(e => e.name);
               localStorage.setItem("teachername",JSON.stringify(teacher))
-              let k= teacher.slice(0, 1);
+              const te=localStorage.getItem('teachername');
+              let k= te.slice(2, 4);
               setL(k);
+              setLog(false)
+              setCheck(p)
               }
             } catch (err) {
               setErrorMessage('Failed to fetch data. Please try again.');
@@ -36,13 +40,14 @@ const TeacherNav = () => {
     },[])
     const getlog=(e)=>
         {
-            const logp=localStorage.getItem('logs')
+            const logp=localStorage.getItem('teacherlogs')
         setLog(!log)
         console.log(logp)
-        navigate('/student')
+        navigate('/teacher')
     }
     const update=()=>{
-        localStorage.removeItem('logs')
+        localStorage.removeItem('teacherlogs')
+       
         setLog(!log)
     }
  
@@ -55,8 +60,8 @@ const TeacherNav = () => {
         <nav className=" lg:flex hidden justify-between items-center w-full h-16 bg-slate-200 ">
             {/* logo */}
             <div className='flex justify-center items-center gap-3'>
-                <img src={logo} className='h-20 w-20 pt-2 cursor-pointer' onClick={()=> navigate('/')} alt="logo"/>
-                <div className='text-green-700 pb-3 font-semibold text-base cursor-pointer' onClick={()=> navigate('/')}>E-College</div>
+                <img src={logo} className='h-20 w-20 pt-2 cursor-pointer' onClick={()=> navigate('/teachercourseok@24')} alt="logo"/>
+                <div className='text-green-700 pb-3 font-semibold text-base cursor-pointer' onClick={()=> navigate('/teachercourseok@24')}>E-College</div>
             </div>
             {/* menu items */}
             <div className='flex justify-center items-center gap-5 text-gray-600'>
@@ -69,10 +74,10 @@ const TeacherNav = () => {
             {/* login */}
             <div className='flex justify-center items-center gap-3 m-2'>
             <FaSearch className=' cursor-pointer' onClick={()=> navigate('/search')}/>
-            {log?<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={getlog}>Student LogIn</button>
-                :<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={update}>Studnt LogOut</button>}
+            {log?<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={getlog}> LogIn</button>
+                :<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={update}>LogOut</button>}
                 {/* change */}
-                <div className='cursor-pointer rounded-full h-10 w-10 bg-purple-700 text-white pl-3.5 pt-2' onClick={()=> navigate('/studentdashbord')}>{l}</div>
+                <div className='cursor-pointer rounded-full h-10 w-10 bg-purple-700 text-white pl-3.5 pt-2' onClick={()=> navigate(`/dashboard/${check}`)}>{l}</div>
             </div>
         </nav>
         {/* Mobile Menu */}
@@ -92,12 +97,12 @@ const TeacherNav = () => {
 
                     <div>
                         <a href="#" className=' flex justify-center items-center'>
-                            <img src={logo} width={90} className='m-2 max-h-9 w-9' onClick={()=> navigate('/')} alt="logo" />
-                            <div className='text-green-700 pb-2 font-semibold text-sm cursor-pointer' onClick={()=> navigate('/')}>E-College</div>
+                            <img src={logo} width={90} className='m-2 max-h-9 w-9' onClick={()=> navigate('/teachercourseok@24')} alt="logo" />
+                            <div className='text-green-700 pb-2 font-semibold text-sm cursor-pointer' onClick={()=> navigate('/teachercourseok@24')}>E-College</div>
                         </a>
                     </div>
                     <div>
-                    <div className='cursor-pointer rounded-full h-6 w-6 bg-purple-700 text-white pl-1.5 mr-1' onClick={()=> navigate('/studentdashbord')}>{l}</div>
+                    <div className='cursor-pointer rounded-full h-6 w-6 bg-purple-700 text-white pl-1.5 mr-1' onClick={()=> navigate(`/dashboard/${check}`)}>{l}</div>
                     </div>
                 </div>
                 {isMobileMenuOpen && (
@@ -107,7 +112,8 @@ const TeacherNav = () => {
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</li>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/student')}>Student LogIn</li>
+                        {log?<li className='hover:text-black cursor-pointer' onClick={getlog}>LogIn</li>
+                :<li className='hover:text-black cursor-pointer' onClick={update}>LogOut</li>}
                     </ul>
                 )}
             </div>

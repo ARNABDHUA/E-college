@@ -82,7 +82,8 @@ const Mcateacher = () => {
                 <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full '>submit</button>
                 </div>
                 </form>
-                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mt-4' onClick={()=> navigate('/mcaliveok@24')}>Live-Class</button>
+                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mt-1' onClick={()=> navigate('/mcaliveok@24')}>Live-Class</button>
+                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mt-1' onClick={()=> navigate('/mcateachereaxm@24')}>MCA Exam</button>
                 <h1>Table</h1>
                 <div className=" flex justify-center">
                 <div className=" container mt-2">
