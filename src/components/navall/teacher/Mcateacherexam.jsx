@@ -32,6 +32,7 @@ const Mcateacherexam = () => {
   const [option4,setOption4]=useState('')
   const [examcount1,setExamcount1]=useState()
   const [ans,setAns]=useState()
+  const [pub,setPub]=useState(false)
   useEffect(()=>{
     axios.get('https://courseapi-3kus.onrender.com/api/courseexam?sub=mca')
     .then(res => {
@@ -43,19 +44,21 @@ const Mcateacherexam = () => {
   },[])
 
   const submit=(e)=>{
-    // e.preventDefault()
+    e.preventDefault()
+    console.log("hello")
     const tname = localStorage.getItem('teachername');
-    const p = JSON.parse(tname);
+    const p = tname.slice(2, 8);
     axios.post('https://courseapi-3kus.onrender.com/api/courseexam-student',{"sub":"mca","teacher":p,"paper":papers,"question":video,"option1":option1,"option2":option2,"option3":option3,"option4":option4,"ans":ans,"examnumber":examcount1})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
 
   const handelPublish=(_id)=>{
-    const confirm=window.confirm("Would you like to Delete?");
+    const confirm=window.confirm("Would you like to Live this Qustion?");
     if (confirm){
       axios.put(`https://courseapi-3kus.onrender.com/api/courseexam/${_id}`,{ "status": true })
       .then(res=>{
+        setPub(true)
         alert("Exam is Published")
       })
       .catch(err=> console.log(err))
@@ -89,7 +92,7 @@ const Mcateacherexam = () => {
         <div className=' overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex justify-center'>
             <div className=' container pb-8 sm:pb-0 mt-6'>
               <div className=" flex  flex-col sm:flex-row md:flex-col items-center sm:items-center sm:justify-center sm:gap-10 w-full text-black  ">
-              <form onSubmit={submit}>
+              <form >
               <div>
             <h3 >SELECT PAPER</h3>
             <select className='border-2 border-gray-400 p-2 rounded-md w-80' value={papers} onChange={changePaper} required>
@@ -135,19 +138,20 @@ const Mcateacherexam = () => {
                 {/* <h3 >ENTER YOUR NAME</h3>
                 <input type="text" name="video" id="video" className="border-2 border-gray-400 p-2 rounded-md w-80 bg-slate-300" placeholder="Eg.- P.B,R.S" value={teacher} onChange={(e)=>setTeacher(e.target.value)} required /> */}
                 <div className=" flex justify-center items-center mt-4">
-                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full '>submit</button>
+                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full ' onClick={submit}>submit</button>
                 </div>
                 </form>
                 
                 <h1>Table</h1>
-                <div className="flex overflow-auto">
                 <div className=" flex justify-center">
-                <div className=" container mt-2">
+                <div className=" container mt-2 mb-3 flex overflow-auto ">
+                
                   <table className=" table">
                     <thead>
                       <tr>
                   <th>Papername</th>
                   <th>Exam</th>
+                  <th>Qustion</th>
                   <th>Teacher</th>
                   <th>Publish</th>
                   <th>Action</th>
@@ -159,16 +163,17 @@ const Mcateacherexam = () => {
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.paper}</td>
                       
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.examnumber}</td>
+                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.question}</td>
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelPublish(d._id)}>Published</td>
+                          {d.status?<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-green-500 cursor-pointer" >Live</td>:<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelPublish(d._id)}>Published</td>}
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>
                       </tr>
                     ))}
                   </tbody>
                   </table>
+                    
                   </div>
                   </div>
-                        </div>
               </div>
             </div> 
         </div>
