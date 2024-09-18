@@ -59,7 +59,7 @@ const Mcaexam = () => {
             <div className='flex justify-center'>
                 <div className='mt-2 font-bold text-[30px]'>MCA Exam</div>
             </div>
-            <div className='w-72 sm:w-[640px] m-auto mt-10 mb-6 text-black flex flex-col gap-[20px] rounded-lg hero-bg-color p-10'>
+            <div className='w-auto mx-4 mt-10 mb-6 text-black flex flex-col gap-[20px] rounded-lg hero-bg-color p-10'>
                 <h1>MCA Exam</h1>
                 <hr className='h-[2px] border-none bg-[#707070]' />
                 {result ? (
@@ -72,7 +72,7 @@ const Mcaexam = () => {
                     <>
                         {question && (
                             <>
-                                <h2 className='text-[27px] font-semibold '>{index + 1}.{question.question}</h2>
+                                <h2 className='text-[20px] font-normal '>{index + 1}.{question.question}</h2>
                                 <ul className='flex flex-col'>
                                     {[question.option1, question.option2, question.option3, question.option4].map((option, optIndex) => (
                                         <li 
