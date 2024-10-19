@@ -59,7 +59,7 @@ const Display = () => {
         <Route path='/bbateacherok@24' element={<Bbateacher/>} />
         <Route path='/mbateacherok@24' element={<Mbateacher/>} />    
         <Route path='/mcaliveok@24' element={<Mcalive/>} /> 
-        <Route path='/bcaliveok@24' element={<Bcalive/>} />  
+        <Route path='/bcaliveok@24/:registerNumber' element={<Bcalive/>} />  
         <Route path='/bcaClassok@24@27' element={<Bcaclass/>} /> 
         <Route path='/mcaClassok@24@27' element={<Mcaclass/>} /> 
         <Route path="/dashboard/:registerNumber" element={<TeacherDashboard />} />

@@ -17,7 +17,14 @@ const Mcateacher = () => {
   const [columns,setColumns]=useState([])
   const[teacher,setTeacher]=useState("")
   const [records,setRecords]=useState([])
+  const [check,setCheck]=useState(null)
+  const [track,setTrack]=useState(null)
   useEffect(()=>{
+    const logp = localStorage.getItem('teacherlogs');
+    const p = JSON.parse(logp);
+    const tname = localStorage.getItem('teachername');
+    setTrack(tname)
+    setCheck(p)
     axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mca')
     .then(res => {
       setColumns(Object.keys(res.data.mydata))
@@ -27,12 +34,22 @@ const Mcateacher = () => {
   },[])
 
   const submit=(e)=>{
-    // e.preventDefault()
+    e.preventDefault()
     const tname = localStorage.getItem('teachername');
     axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mca","time":"00","teacher":tname})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
+
+  useEffect(() => {
+    axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mca')
+    .then(res => {
+      // console.log(res.data.mydata)
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
+    })
+    .catch(err=>console.log(err))
+  }, [submit])
 
   const handelDelete=(_id)=>{
     const confirm=window.confirm("Would you like to Delete?");
@@ -50,7 +67,8 @@ const Mcateacher = () => {
   const[ar,setAr]=useState([])
   // console.log(ak)
   return (
-    <div>
+<div>
+   {track!==null? <div>
       <TeacherNav/>
         <div className=" flex justify-center items-center p-4 ">
         <h1 className="text-xl text-black">Add Data(MCA)</h1>
@@ -97,13 +115,13 @@ const Mcateacher = () => {
                   </tr>
                   </thead>
                   <tbody>
-                    {records.map((d,i)=>(
+                  {records.filter(d => d.teacher === track).map((d,i)=>(
                       <tr key={i}>
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.name}</td>
                       
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>
+                          {track===d.teacher?<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>:<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-800 cursor-pointer" >Del</td>}
                       </tr>
                     ))}
                   </tbody>
@@ -118,6 +136,10 @@ const Mcateacher = () => {
     </div>
 
      
+    </div>:
+    <div className=" flex justify-center items-center mt-10">
+    <div className=" text-xl font-bold">404 NOT FOUND</div>
+    </div>}
     </div>
   );
 };

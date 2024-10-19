@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
 import axios from "axios";
+// import { examcount } from '../../assets/test';
+// import { mcaPaper } from '../../assets/mcadata';
 
 const Mcaexam = () => {
     const [columns, setColumns] = useState([]);
@@ -13,11 +15,20 @@ const Mcaexam = () => {
     const [lock, setLock] = useState(false);
     const [result, setResult] = useState(false);
     const [score, setScore] = useState(0);
+    // const [newpaper,setNewpaper]=useState("")
+    // const [examcouunt2,setExamcount2]=useState()
+
+    // const changePapers=(event)=>{
+    //     setNewpaper(event.target.value)
+    //   }
+    //   const changeExams=(event)=>{
+    //     setExamcount2(event.target.value)  
+    //   }
 
     useEffect(() => {
         axios.get('https://courseapi-3kus.onrender.com/api/courseexam?sub=mca&status=true')
             .then(res => {
-                console.log(res.data.Courseexam);
+                // console.log(res.data.Courseexam);
                 const courseExamData = res.data.Courseexam;
                 setColumns(Object.keys(courseExamData[0])); // Assuming all records have the same structure
                 setRecords(courseExamData);
@@ -72,7 +83,8 @@ const Mcaexam = () => {
                     <>
                         {question && (
                             <>
-                                <h2 className='text-[20px] font-normal '>{index + 1}.{question.question}</h2>
+                                <h2 className='text-[20px] font-normal '>{question.des}</h2>
+                                <h2 className='text-[20px] font-semibold '>{index + 1}.{question.question}</h2>
                                 <ul className='flex flex-col'>
                                     {[question.option1, question.option2, question.option3, question.option4].map((option, optIndex) => (
                                         <li 

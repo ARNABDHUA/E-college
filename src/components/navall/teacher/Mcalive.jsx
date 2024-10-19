@@ -14,7 +14,10 @@ const Mcalive = () => {
   const [columns,setColumns]=useState([])
   const [teacher,setTeacher]=useState("")
   const [records,setRecords]=useState([])
+  const [track,setTrack]=useState(null)
   useEffect(()=>{
+    const tname = localStorage.getItem('teachername');
+    setTrack(tname)
     axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mcaLIVE')
     .then(res => {
       setColumns(Object.keys(res.data.mydata))
@@ -24,12 +27,24 @@ const Mcalive = () => {
   },[])
 
   const submit=(e)=>{
-    // e.preventDefault()
+    e.preventDefault()
     const tname = localStorage.getItem('teachername');
     axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mcaLIVE","time":time,"teacher":tname})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
+
+  useEffect(()=>{
+    const tname = localStorage.getItem('teachername');
+    setTrack(tname)
+    axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mcaLIVE')
+    .then(res => {
+      // console.log(res.data.mydata)
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
+    })
+    .catch(err=>console.log(err))
+  },[submit])
 
   const handelDelete=(_id)=>{
     const confirm=window.confirm("Would you like to Delete?");
@@ -103,7 +118,7 @@ const Mcalive = () => {
                       
                       <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
                       <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
-                      <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>
+                      {track===d.teacher?<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>:<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-800 cursor-pointer" >Del</td>}
                       </tr>
                     ))}
                   </tbody>

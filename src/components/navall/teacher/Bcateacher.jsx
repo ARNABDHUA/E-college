@@ -16,23 +16,42 @@ const Bcateacher = () => {
   const {id}=useParams()
   const [columns,setColumns]=useState([])
   const [records,setRecords]=useState([])
+  const [check,setCheck]=useState(null)
+  const [track,setTrack]=useState(null)
   useEffect(()=>{
+    const logp = localStorage.getItem('teacherlogs');
+    const p = JSON.parse(logp);
+    const tname = localStorage.getItem('teachername');
+    setTrack(tname)
+    setCheck(p)
     axios.get('https://courseapi-3kus.onrender.com/api/products?sub=bca')
     .then(res => {
-      console.log(res.data.mydata)
+      // console.log(res.data.mydata)
       setColumns(Object.keys(res.data.mydata))
       setRecords(res.data.mydata)
     })
     .catch(err=>console.log(err))
   },[])
 
+  
+  
   const submit=(e)=>{
-    // e.preventDefault()
+    e.preventDefault()
     const tname = localStorage.getItem('teachername');
     axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bca","time":"00","teacher":tname})
     .then(res=>alert("Data is Added successfully"))
+    .catch(err=>console.log(err))
+    }
+    
+    useEffect(() => {
+      axios.get('https://courseapi-3kus.onrender.com/api/products?sub=bca')
+      .then(res => {
+        // console.log(res.data.mydata)
+        setColumns(Object.keys(res.data.mydata))
+        setRecords(res.data.mydata)
+      })
       .catch(err=>console.log(err))
-  }
+    }, [submit])
 
   const handelDelete=(_id)=>{
     const confirm=window.confirm("Would you like to Delete?");
@@ -50,9 +69,10 @@ const Bcateacher = () => {
   const[teacher,setTeacher]=useState("")
   const [ak, setAk] = useState(MCA[0]['papers'][0]['videos']);
   const[ar,setAr]=useState([])
-  console.log(ak)
+  // console.log(ak)
   return (
     <div>
+     {track!==null? <div>
       <TeacherNav/>
         <div className=" flex justify-center items-center p-4 ">
         <h1 className="text-xl text-black">Add Data(BCA)</h1>
@@ -85,10 +105,10 @@ const Bcateacher = () => {
                 <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full '>submit</button>
                 </div>
                 </form>
-                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mt-4' onClick={()=> navigate('/bcaliveok@24')}>Live-Class</button>
+                <button className='bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full mt-4' onClick={()=> navigate(`/bcaliveok@24/${check}`)}>Live-Class</button>
                 <h1>Table</h1>
-                <div className=" flex justify-center">
-                <div className=" container mt-2">
+                <div className=" flex justify-center overflow-auto">
+                <div className=" container mt-2 mb-2 ">
                   <table className=" table">
                     <thead>
                       <tr>
@@ -99,13 +119,13 @@ const Bcateacher = () => {
                   </tr>
                   </thead>
                   <tbody>
-                    {records.map((d,i)=>(
+                    {records.filter(d => d.teacher === track).map((d,i)=>(
                       <tr key={i}>
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.name}</td>
                       
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>
+                          {track===d.teacher?<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>:<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-800 cursor-pointer" >Del</td>}
                       </tr>
                     ))}
                   </tbody>
@@ -119,6 +139,10 @@ const Bcateacher = () => {
     </div>
     </div>
 
+</div>:
+<div className=" flex justify-center items-center mt-10">
+ <div className=" text-xl font-bold">404 NOT FOUND</div>
+ </div>}
      
     </div>
   );

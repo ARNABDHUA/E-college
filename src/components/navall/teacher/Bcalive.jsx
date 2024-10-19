@@ -14,10 +14,13 @@ const Bcalive = () => {
   const [teacher,setTeacher]=useState("")
   const [records,setRecords]=useState([])
   const [time,setTime]=useState([])
+  const [track,setTrack]=useState(null)
   useEffect(()=>{
+    const tname = localStorage.getItem('teachername');
+    setTrack(tname)
     axios.get('https://courseapi-3kus.onrender.com/api/products?sub=bcaLIVE')
     .then(res => {
-      console.log(res.data.mydata)
+      // console.log(res.data.mydata)
       setColumns(Object.keys(res.data.mydata))
       setRecords(res.data.mydata)
     })
@@ -25,12 +28,24 @@ const Bcalive = () => {
   },[])
 
   const submit=(e)=>{
-    // e.preventDefault()
-    const tname = localStorage.getItem('teachername');
-    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bcaLIVE","time":time,"teacher":tname})
-    .then(res=>alert("Data is Added successfully"))
+    e.preventDefault()
+    // const tname = localStorage.getItem('teachername');
+    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bcaLIVE","time":time,"teacher":track})
+    .then(res=>alert("Data is Added successfully and please reload the page"))
       .catch(err=>console.log(err))
   }
+
+  useEffect(()=>{
+    const tname = localStorage.getItem('teachername');
+    setTrack(tname)
+    axios.get('https://courseapi-3kus.onrender.com/api/products?sub=bcaLIVE')
+    .then(res => {
+      // console.log(res.data.mydata)
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
+    })
+    .catch(err=>console.log(err))
+  },[submit])
 
   const handelDelete=(_id)=>{
     const confirm=window.confirm("Would you like to Delete?");
@@ -46,7 +61,7 @@ const Bcalive = () => {
   const[link,setLink]=useState("");
   const [ak, setAk] = useState(MCA[0]['papers'][0]['videos']);
   const[ar,setAr]=useState([])
-  console.log(ak)
+  // console.log(ak)
   return (
     <div>
       <TeacherNav/>
@@ -104,7 +119,7 @@ const Bcalive = () => {
                       
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.subtitle}</td>
                           <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-300">{d.teacher}</td>
-                          <td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>
+                          {track===d.teacher?<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-yellow-200 cursor-pointer" onClick={(e)=>handelDelete(d._id)}>Del</td>:<td className="border-2 border-gray-400 p-2 rounded-md w-80 sm:w-auto bg-slate-800 cursor-pointer" >Del</td>}
                       </tr>
                     ))}
                   </tbody>

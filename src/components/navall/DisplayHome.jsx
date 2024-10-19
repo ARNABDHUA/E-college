@@ -12,8 +12,8 @@ const DisplayHome = () => {
     <Navbar/>
     <Hero/>
     <Project/>
-    <Exam/>
     <Advertisement/>
+    <Exam/>
     <Mentors/>
     </>
   )

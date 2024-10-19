@@ -47,8 +47,9 @@ const TeacherNav = () => {
     }
     const update=()=>{
         localStorage.removeItem('teacherlogs')
-       
+        localStorage.removeItem('teachername')
         setLog(!log)
+        navigate('/')
     }
  
     const toggleMobileMenu = () => {
