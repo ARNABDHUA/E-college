@@ -67,14 +67,14 @@ const TeacherNav = () => {
             {/* menu items */}
             <div className='flex justify-center items-center gap-5 text-gray-600'>
                     <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/')} >Home</div>
-                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/guardian')}>Guardian</div>
-                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</div>
-                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</div>
-                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</div>
+                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/attendence')}>Attendence</div>
+                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/mark')}>Marks</div>
+                    <div className='hover:text-black cursor-pointer' onClick={()=> navigate('/managementcontacts')}>Management Contacts</div>
+                    
             </div>
             {/* login */}
             <div className='flex justify-center items-center gap-3 m-2'>
-            <FaSearch className=' cursor-pointer' onClick={()=> navigate('/search')}/>
+            {/* <FaSearch className=' cursor-pointer' onClick={()=> navigate('/search')}/> */}
             {log?<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={getlog}> LogIn</button>
                 :<button className='bg-orange-500 text-white py-2 px-4 rounded-3xl' onClick={update}>LogOut</button>}
                 {/* change */}
@@ -93,7 +93,7 @@ const TeacherNav = () => {
                             <FaBars className='m-2 h-6 w-5'/>
                         )}</button>
 
-                        <FaSearch className=' cursor-pointer' onClick={()=> navigate('/search')}/>
+                        {/* <FaSearch className=' cursor-pointer' onClick={()=> navigate('/search')}/> */}
                     </div>
 
                     <div>
@@ -109,10 +109,9 @@ const TeacherNav = () => {
                 {isMobileMenuOpen && (
                     <ul className='mx-2 z-1000 p-2 mt-2 flex flex-col gap-4 text-gray-600 bg-slate-200 py-5 rounded-md '>
                         <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/')}>Home</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/guardian')}>Guardian</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/teacher')}>Teacher</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/admin')}>Admin</li>
-                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/management')}>Management</li>
+                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/attendence')}>Attendence</li>
+                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/mark')}>Marks</li>
+                        <li className='hover:text-black cursor-pointer' onClick={()=> navigate('/managementcontacts')}>Management Contacts</li>
                         {log?<li className='hover:text-black cursor-pointer' onClick={getlog}>LogIn</li>
                 :<li className='hover:text-black cursor-pointer' onClick={update}>LogOut</li>}
                     </ul>
