@@ -8,6 +8,7 @@ import {mcaPaper} from '../../assets/mcadata.js'
 import {mcavideos} from '../../assets/mcadata.js'
 import { useNavigate } from 'react-router-dom';
 import HashLoader  from "react-spinners/HashLoader"
+import Payment from './Payment'
 
 const Mca = () => {
   const navigate= useNavigate();
@@ -40,6 +41,7 @@ const Mca = () => {
   const[video,setVideo]=useState("--video--")
   const[link,setLink]=useState(false)
   const[lock,setLock]=useState('')
+  const [pay,setPay]=useState(true)
   const [loading, setLoading] = useState(true);
   const[testvideo,setTestVideo]=useState([])
   const[papers,setPapers]=useState([])
@@ -70,14 +72,33 @@ const Mca = () => {
     const test=(response['data']['candidates'][0]['content']['parts'][0]['text']).split('**');
     setAnswer(test)
   }
-
-  const handleSubscription = async () => {
+  const handelChange=async()=>{
+    try {
+      const logp = localStorage.getItem('logs');
+      const p = JSON.parse(logp);
+      console.log(p)
+      if (p!==null)
+      {setPay(!pay)
+      setErrorMessage('');}
+      else{
+        setErrorMessage('Please login to access this feature');
+      }
+    } catch (error) {
+      setErrorMessage('Subscription failed. Please Login.');
+      console.error(error);
+    }
+  }
+  
+  const handleSubscription = async (e) => {
+    e.preventDefault();
+    alert("Payment Successful")
     try {
       const logp = localStorage.getItem('logs');
       const p = JSON.parse(logp);
       await axios.put(`https://courseapi-3kus.onrender.com/api/student/${p}`, { "mca": true });
       setLock(true);
       setErrorMessage('');
+      setPay(!pay)
     } catch (error) {
       setErrorMessage('Subscription failed. Please Login.');
       console.error(error);
@@ -97,6 +118,7 @@ const Mca = () => {
 
   return (
     <div>
+        {pay?(<div>
         <Navbar/>
         <div className=' flex justify-center items-center'>
             <h1 className=' text-xl mt-3 sm:text-3xl'>MCA</h1>
@@ -140,8 +162,8 @@ const Mca = () => {
                     <ReactPlayer url={video} controls width="100%" height="100%" />
                   </div>
                 ) : !lock ? (<>
-                  <h2 className="mt-3 mb-3">You need to subscribe</h2>
-                  <h3 className="mt-3 mb-3">LogIn before subscribe</h3></>
+                  <h2 className="mt-3 mb-3">You need to BUY</h2>
+                  <h3 className="mt-3 mb-3">LogIn before BUY</h3></>
                 ) : (
                   <h2 className="mt-3 mb-3">Select Video</h2>
                 )}
@@ -165,9 +187,10 @@ const Mca = () => {
                   </div>
                 )}
                 {!lock && (
-                  <button className="bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full" onClick={handleSubscription}>
-                    Subscribe
+                  <button className="bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 rounded-full" onClick={handelChange}>
+                   BUY Rs.3000
                   </button>
+                  // <Payment/>
                 )}
                 {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
@@ -176,6 +199,7 @@ const Mca = () => {
        </div> 
       </div>
         </div>
+        </div>):(<Payment handleSubscription={handleSubscription}/>)}
 
     </div>
   )
