@@ -1,40 +1,65 @@
-import React from 'react'
-import { mentors } from '../../../assets/Assets'
+import React from "react";
+import { mentors } from "../../../assets/Assets";
+import { motion } from "framer-motion"; // For animations
 
 const Mentors = () => {
   return (
-    <div>
-        <div className=' flex justify-center items-center pt-10'>
-            <h1 className='mb-8 text-center text-3xl lg:text-4xl'>Mentors</h1>
+    <div className="pt-10 bg-gray-50">
+      {/* Title */}
+      <div className="flex justify-center items-center mb-8">
+        <h1 className="text-center text-3xl sm:text-4xl font-extrabold text-gray-800">
+          Mentors
+        </h1>
+      </div>
+
+      {/* Mentors List */}
+      <div className="flex flex-wrap justify-center items-center gap-6 px-4">
+        {mentors.map((mentor) => (
+          <motion.div
+            key={mentor.id}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full sm:w-[90%] md:w-[90%] lg:w-[90%] xl:w-[90%] rounded-3xl bg-white shadow-lg overflow-hidden"
+          >
+            <div className="flex flex-col sm:flex-row items-center">
+              {/* Mentor Image */}
+              <img
+                src={mentor.image}
+                alt={mentor.name}
+                className="w-24 h-24 sm:w-32 sm:h-32 lg:w-32 lg:h-32 object-cover rounded-full mx-4 mt-4 sm:mt-0 shadow-md"
+              />
+
+              {/* Mentor Info */}
+              <div className="flex flex-col flex-grow gap-4 p-4 sm:pl-6 sm:pr-10 text-center sm:text-left">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-700">
+                  {mentor.name}
+                </h3>
+                <p className="text-md sm:text-lg text-gray-500">
+                  {mentor.title}
+                </p>
+                <p className="text-sm sm:text-base text-gray-600">
+                  {mentor.description.slice(0, 100)}...
+                </p>
+
+                {/* Buttons */}
+                <div className="mt-4 flex justify-center sm:justify-start">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="bg-orange-500 text-white px-6 py-2 rounded-full shadow-lg hover:bg-orange-600 transition-all"
+                  >
+                    <a href="mailto:ecollege2024@gmail.com">Message</a>
+                  </motion.button>
+                </div>
+              </div>
             </div>
-        
-            {mentors.map((items)=>(
-                 <div key={items.id} className=' flex justify-center items-center px-0  my-2 sm:px-3' >
-                   <div className=' container mt-2 mx-3 ' > 
-                   <div className=' overflow-hidden rounded-3xl min-h-[200px] sm:min-h-[250px] hero-ag-color flex justify-center items-center '>
-            <div className=' container pb-8 sm:pb-0 relative'>
-
-
-                <div className=' flex flex-col sm:flex-row items-center gap-1 sm:gap-3 '>
-                 <img src={items.image} alt={items.name} className='max-h-[150px] sm:max-h-[270px] w-40 sm:w-72 rounded-xl sm:ml-4 ml-2 mt-2 ' />
-                 <h3 className=' mb-2 text-xl sm:text-3xl  text-nowrap'>{items.name}</h3>
-                 <p className='mb-2 p-3 text-sm sm:text-lg text-nowrap '>{items.title}</p>
-                 <p className='mb-12 p-4 text-sm sm:text-lg lg:block hidden'>{items.description}</p>
-                 <button  className='lg:block  mr-16 hidden relative right-5 bg-primary text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8  rounded-full '><a href="mailto:ecollege2024@gmail.com">Message</a></button>
-                 <div className=' flex justify-center'>
-                 <button  className=' lg:hidden  mt-4  text-white bg-orange-500 cursor-pointer hover:scale-105 duration-300 py-2 px-8 mx-2 rounded-full relative right-0 sm:right-40 top-0 sm:top-16 '><a href="mailto:ecollege2024@gmail.com">Message</a></button>
-                 </div>
-                 
-                 </div>
-                 </div>
-                 </div>
-                 </div>
-                 </div>
-            ))}
-   
-    
+          </motion.div>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Mentors
+export default Mentors;
