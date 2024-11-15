@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EditTeacherForm from './EditTeacherForm'; // Import the new component
 import Navbar from '../../Navbar';
 import HashLoader  from "react-spinners/HashLoader"
+import AdminNav from '../../AdminNav';
 const TeachersDataPage = () => {
   const [teachers, setTeachers] = useState([]);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -63,7 +64,7 @@ const TeachersDataPage = () => {
 
   return (
     <div className="">
-      <Navbar/>
+      <AdminNav/>
     <div className="p-8 bg-gray-800 min-h-screen text-white">
       <h1 className="text-2xl font-bold mb-4">Teachers Data</h1>
 

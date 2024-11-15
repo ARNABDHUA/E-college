@@ -7,8 +7,8 @@ const HeroData=[
         id:1,
         Image:img1,
         subtitle:"Best Quality Education",
-        title:"Is More Easier",
-        title2:"Course",
+        title:"Is More Easier on",
+        title2:"Ecollege",
         description: "And Cost-effective",
         path:"/course"
     },
@@ -44,7 +44,7 @@ const Hero = () => {
                         {/* text contener */}
                         <div className='flex justify-center flex-col gap-4 sm:pl-3 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1  '>
                         <h1  className=' text-2xl sm:text-6xl md:text-3xl lg:text-2xl font-bold'>{data.subtitle}</h1>
-                        <h1  className=' text-4xl sm:text-6xl lg:text-7xl font-bold sm:p-10 '>{data.title}</h1>
+                        <h1  className=' text-4xl sm:text-5xl lg:text-6xl font-bold sm:p-10 '>{data.title}</h1>
                         <h1  className='text-6xl uppercase text-gray-500  sm:text-[80px] md:text-[80px] xl:text-[150px] font-bold'>{data.title2}</h1>
                         {/* <h1  className=' text-2xl sm:text-6xl lg:text-4xl font-bold'>{data.description}</h1> */}
                         <div  className='pt-10 sm:pt-40'>

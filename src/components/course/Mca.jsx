@@ -13,13 +13,15 @@ import Payment from './Payment'
 const Mca = () => {
   const navigate= useNavigate();
   const [columns,setColumns]=useState([])
+  const [time, setTime] = useState(new Date().toLocaleString().slice(0,10));
+  const [fixt, setFixt] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
+        
         const res = await axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mca');
         setColumns(Object.keys(res.data.mydata));
         setTestVideo(res.data.mydata);
-
         const logp = localStorage.getItem('logs');
         const p = JSON.parse(logp);
         const studentRes = await axios.get(`https://courseapi-3kus.onrender.com/api/students?email=${p}`);
@@ -95,7 +97,12 @@ const Mca = () => {
     try {
       const logp = localStorage.getItem('logs');
       const p = JSON.parse(logp);
-      await axios.put(`https://courseapi-3kus.onrender.com/api/student/${p}`, { "mca": true });
+      let change=parseInt(time.slice(6,10));
+        let changenew=change+2;
+        let enddate=changenew.toString();
+        let fast=time.slice(0,6);
+        let result=fast.concat(enddate)
+      await axios.put(`https://courseapi-3kus.onrender.com/api/student/${p}`, { "mca": true ,"course":"12","starting":time,"end":result});
       setLock(true);
       setErrorMessage('');
       setPay(!pay)

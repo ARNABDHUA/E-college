@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../Navbar";
 import { useNavigate } from "react-router-dom";
+import AdminNav from "../../AdminNav";
 
 const AdminDashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -22,7 +23,7 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <Navbar />
+      <AdminNav/>
       <div className={`flex flex-col justify-center items-center min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} transition-colors duration-300`}>
         <div className="flex justify-end w-full max-w-4xl p-4">
           <button

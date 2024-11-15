@@ -8,6 +8,7 @@ const Mcaclass = () => {
   const [dataas, setDataas] = useState([]);
   const [students, setStudents] = useState([]);
   const [studentname, setStudentname] = useState("");
+  const [roll,setRoll]=useState("");
   const [time, setTime] = useState(new Date());
   const [fixt, setFixt] = useState(time.toLocaleString().slice(0, 10));
   const [refresh, setRefresh] = useState(false);  // New state for auto-refresh
@@ -29,30 +30,37 @@ const Mcaclass = () => {
   useEffect(() => {
     const logos = localStorage.getItem('logs');
     const p = JSON.parse(logos);
-
+  
     axios.get(`https://courseapi-3kus.onrender.com/api/students/?email=${p}`)
       .then(res => {
-        setDataas(res.data.students);
-        setStudentname(res.data.students.map((e) => e.name).join(", "));
+        const studentsData = res.data.students;
+        setDataas(studentsData);
+        setStudentname(studentsData.map((e) => e.name).join(", "));
+        const rollNumbers = studentsData.map((e) => e.roll);
+        const parseRoll=JSON.parse(rollNumbers);
+        setRoll(parseRoll);
+  
+        // Log roll data directly here
+        // console.log(parseRoll);
       })
       .catch(err => console.log(err));
   }, []);
+  
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/atten/?student=${studentname}&date=${fixt}`);
+        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/atten/?student=${roll}&date=${fixt}`);
         setStudents(response.data.attend);
-        console.log(response.data.attend);
       } catch (error) {
         console.error('Error fetching students:', error);
       }
     };
 
-    if (studentname) {
+    if (roll) {
       fetchStudents();
     }
-  }, [studentname, fixt, refresh]);  // Add `refresh` as a dependency
+  }, [roll, fixt, refresh]);  // Add `refresh` as a dependency
 
   const attend = (a, b, c) => {
     const isEmailExist = students.some((student) => student.paper === b);
@@ -62,11 +70,12 @@ const Mcaclass = () => {
       window.open(c);
     } else {
       axios.post('https://courseapi-3kus.onrender.com/api/atten', {
-        "sub": "mca",
+        "sub": "mcaLIVE",
         "teacher": a.slice(2, 7),
         "paper": b,
         "date": fixt,
-        "student": studentname
+        "student": studentname,
+        "roll":roll
       })
         .then(res => {
           console.log("ok");

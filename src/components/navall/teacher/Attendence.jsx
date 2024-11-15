@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import TeacherNav from '../../TeacherNav';
 
 const Attendance = () => {
   const [datas, setData] = useState([]);
   const [columns, setColumns] = useState([]);
+  const [records,setRecords]=useState([])
   const [dates, setDates] = useState(new Date().toLocaleString().slice(0,10));
 
   useEffect(() => {
@@ -16,6 +18,16 @@ const Attendance = () => {
       .catch(err => console.log(err));
    
   }, [dates]);
+
+  useEffect(()=>{
+    axios.get('https://courseapi-3kus.onrender.com/api/products/')
+    .then(res => {
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
+    })
+    .catch(err=>console.log(err))
+  },[])
+  
 
   const handleDelete = (_id) => {
     const confirm = window.confirm("Would you like to delete?");
@@ -31,6 +43,8 @@ const Attendance = () => {
   };
 
   return (
+    <>
+    <TeacherNav/>
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse bg-white shadow-lg rounded-lg">
         <thead>
@@ -45,13 +59,16 @@ const Attendance = () => {
               Student
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              Roll
+            </th>
+            <th className="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Date
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Action
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-              Total
+              Present
             </th>
           </tr>
         </thead>
@@ -62,19 +79,21 @@ const Attendance = () => {
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">{row.sub}</td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">{row.paper}</td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">{row.student}</td>
+              <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">{row.roll}</td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">{row.date}</td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200 text-red-500 cursor-pointer"
                   onClick={() => handleDelete(row._id)}>
                 Delete
               </td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-                {datas.filter(e => e.student === row.student && e.paper === row.paper).length}
+                {datas.filter(e => e.roll === row.roll && e.paper === row.paper).length}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 

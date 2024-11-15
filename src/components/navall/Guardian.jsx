@@ -5,7 +5,7 @@ const Guardian = () => {
   return (
     <>
     <Navbar/>
-    <div>Guardian</div>
+    <div></div>
     </>
   )
 }

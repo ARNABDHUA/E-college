@@ -15,6 +15,8 @@ const Bcalive = () => {
   const [records,setRecords]=useState([])
   const [time,setTime]=useState([])
   const [track,setTrack]=useState(null)
+  const [timek, setTimek] = useState(new Date());
+  const [fixt, setFixt] = useState(timek.toLocaleString().slice(0, 10));
   useEffect(()=>{
     const tname = localStorage.getItem('teachername');
     setTrack(tname)
@@ -30,7 +32,7 @@ const Bcalive = () => {
   const submit=(e)=>{
     e.preventDefault()
     // const tname = localStorage.getItem('teachername');
-    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bcaLIVE","time":time,"teacher":track})
+    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"bcaLIVE","time":time,"teacher":tname,"date":fixt})
     .then(res=>alert("Data is Added successfully and please reload the page"))
       .catch(err=>console.log(err))
   }
@@ -105,9 +107,9 @@ const Bcalive = () => {
                 <div className=" container mt-2">
                   <table className=" table">
                     <thead>
-                      <tr>
-                  <th>Name</th>
-                  <th>Link</th>
+                    <tr>
+                   <th>Topic</th>
+                  <th>Paper</th>
                   <th>Teacher</th>
                   <th>Action</th>
                   </tr>

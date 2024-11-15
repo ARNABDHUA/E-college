@@ -2,13 +2,55 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
+import AdminNav from '../../AdminNav';
 
-const SignUp = ({ onSignUp }) => {
+const Data=[
+    {
+        id:1,
+        name:"mca"},
+    {
+    id:2,
+    name:"bca"},
+    {
+    id:3,
+    name:"btech"},
+    {
+        id:4,
+        name:"mtech"},
+    {
+            id:5,
+            name:"bba"},
+            {
+                id:6,
+                name:"mba"},
+                {
+                    id:7,
+                    name:"jeemain"},
+                    {
+                        id:8,
+                        name:"wbjeca"},
+                        {
+                            id:9,
+                            name:"wbjee"},
+                            {
+                                id:10,
+                                name:"gate"},
+                                {
+                                    id:11,
+                                    name:"ipmat"},
+                                    {
+                                        id:12,
+                                        name:"cat"},
+]
+
+const Addstudent= ({ onSignUp }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [guardian, setGuardian] = useState('');
+  const [course,setCourse]=useState('');
+  const [status,setStatus]=useState(true);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,10 +86,10 @@ const SignUp = ({ onSignUp }) => {
         email,
         password,
         guardian,
-        phonenumber: phone,
+        phonenumber: phone
       });
       alert('Registered successfully!');
-      navigate('/');
+    //   navigate('/');
     } catch (error) {
       console.error('Error registering student:', error);
       setErrorMessage('Error registering. Please try again.');
@@ -55,11 +97,17 @@ const SignUp = ({ onSignUp }) => {
       setLoading(false);
     }
   };
+  const handleChange = (event) => {
+    setCourse(event.target.value);
+    
+  };
 
   return (
+    <>
+    <AdminNav/>
     <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">Student register</h2>
 
         {loading ? (
           <div className="flex justify-center items-center mt-10">
@@ -126,6 +174,13 @@ const SignUp = ({ onSignUp }) => {
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
+            <h3 className="mt-3">Course</h3>
+                  <select className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value={course} onChange={handleChange}>
+                    <option>--course--</option>
+                    {Data.map(sem => (
+                      <option value={sem.name} key={sem.id}>{sem.name}</option>
+                    ))}
+                  </select>
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -136,7 +191,8 @@ const SignUp = ({ onSignUp }) => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
-export default SignUp;
+export default Addstudent;

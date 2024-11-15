@@ -35,12 +35,13 @@ import Mcateacherexam from './navall/teacher/Mcateacherexam'
 import Attendence from './navall/teacher/Attendence'
 import Mark from './navall/teacher/Mark'
 import Managementcontacts from './navall/teacher/Managementcontacts'
+import Addstudent from './navall/admin/Addstudent'
 const Display = () => {
   return (
     <div>
         <Routes>
         <Route path='/' element={<DisplayHome/>} />
-        <Route path='/guardian' element={<Guardian/>} />
+        <Route path='/guidance' element={<Guardian/>} />
         <Route path='/teacher' element={<Teacher/>} />
         <Route path='/admin' element={<Admin/>} />
         <Route path='/management' element={<Management/>} />
@@ -74,6 +75,7 @@ const Display = () => {
         <Route path="/attendence" element={<Attendence/>} />
         <Route path="/mark" element={<Mark/>} />
         <Route path="/managementcontacts" element={<Managementcontacts/>} />
+        <Route path="/student-register" element={<Addstudent/>} />
       </Routes>
     </div>
   )

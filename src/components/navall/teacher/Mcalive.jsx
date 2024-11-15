@@ -15,6 +15,8 @@ const Mcalive = () => {
   const [teacher,setTeacher]=useState("")
   const [records,setRecords]=useState([])
   const [track,setTrack]=useState(null)
+  const [timek, setTimek] = useState(new Date());
+  const [fixt, setFixt] = useState(timek.toLocaleString().slice(0, 10));
   useEffect(()=>{
     const tname = localStorage.getItem('teachername');
     setTrack(tname)
@@ -29,7 +31,7 @@ const Mcalive = () => {
   const submit=(e)=>{
     e.preventDefault()
     const tname = localStorage.getItem('teachername');
-    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mcaLIVE","time":time,"teacher":tname})
+    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mcaLIVE","time":time,"teacher":tname,"date":fixt})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }
@@ -105,8 +107,8 @@ const Mcalive = () => {
                   <table className=" table">
                     <thead>
                       <tr>
-                   <th>Name</th>
-                  <th>Link</th>
+                   <th>Topic</th>
+                  <th>Paper</th>
                   <th>Teacher</th>
                   <th>Action</th>
                   </tr>
