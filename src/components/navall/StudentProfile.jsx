@@ -9,7 +9,7 @@ const StudentProfile = ({ student }) => {
 
   return (
     <div className="bg-[#1E3A8A] min-h-screen py-10 px-5 sm:px-10">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-8 sm:p-10 lg:p-12 space-y-8">
+      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-2xl p-8 sm:p-10 lg:p-12 space-y-8">
         <h2 className="text-3xl font-bold text-center text-[#1E3A8A] mb-6">
           Student Profile
         </h2>
@@ -44,7 +44,7 @@ const StudentProfile = ({ student }) => {
 
         <div className="space-y-4 mb-8 text-center sm:text-left">
           <h3 className="text-2xl text-[#333] font-medium">Other Details</h3>
-          <ul className="text-sm text-[#555]">
+          <ul className="text-sm text-[#555] list-disc pl-5">
             {student.bca && <li>BCA</li>}
             {student.mca && <li>MCA</li>}
             {student.btech && <li>BTech</li>}
@@ -61,9 +61,9 @@ const StudentProfile = ({ student }) => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left text-[#333]">
+          <table className="w-full border-collapse text-left text-[#333] mb-6">
             <tbody>
-              {[
+              {[ 
                 { label: "Name", value: student.name },
                 { label: "Roll No", value: student.roll },
                 { label: "Guardian Name", value: student.guardian },
@@ -73,16 +73,22 @@ const StudentProfile = ({ student }) => {
                 { label: "Phone Number", value: student.phonenumber },
               ].map((item, index) => (
                 <tr key={index} className="border-b">
-                  <td className="border px-4 py-2 font-semibold whitespace-nowrap">
-                    {item.label}
-                  </td>
-                  <td className="border px-4 py-2 break-words max-w-[200px] sm:max-w-none lg:max-w-[400px]">
-                    {item.value}
-                  </td>
+                  <td className="border px-4 py-2 font-semibold whitespace-nowrap">{item.label}</td>
+                  <td className="border px-4 py-2 break-words max-w-[200px] sm:max-w-none lg:max-w-[400px]">{item.value}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-center space-x-6">
+          <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full shadow-md transition-all transform hover:scale-105">
+            View Attendance
+          </button>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full shadow-md transition-all transform hover:scale-105">
+            View Result
+          </button>
         </div>
       </div>
     </div>
