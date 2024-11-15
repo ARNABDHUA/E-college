@@ -102,7 +102,7 @@ const Mca = () => {
         let enddate=changenew.toString();
         let fast=time.slice(0,6);
         let result=fast.concat(enddate)
-      await axios.put(`https://courseapi-3kus.onrender.com/api/student/${p}`, { "mca": true ,"course":"12","starting":time,"end":result});
+      await axios.put(`https://courseapi-3kus.onrender.com/api/student/${p}`, { "mca": true ,"course":"MCA","starting":time,"end":result});
       setLock(true);
       setErrorMessage('');
       setPay(!pay)
