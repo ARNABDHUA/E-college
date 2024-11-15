@@ -50,7 +50,7 @@ const Mcaclass = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/atten/?student=${roll}&date=${fixt}`);
+        const response = await axios.get(`https://courseapi-3kus.onrender.com/api/atten/?roll=${roll}&date=${fixt}`);
         setStudents(response.data.attend);
       } catch (error) {
         console.error('Error fetching students:', error);
