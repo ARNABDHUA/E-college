@@ -37,6 +37,7 @@ import Mark from './navall/teacher/Mark'
 import Managementcontacts from './navall/teacher/Managementcontacts'
 import Addstudent from './navall/admin/Addstudent'
 import Error404 from './Error404'
+import StudentData from './navall/admin/StudentData'
 const Display = () => {
   return (
     <div>
@@ -78,6 +79,7 @@ const Display = () => {
         <Route path="/managementcontacts" element={<Managementcontacts/>} />
         <Route path="/student-register" element={<Addstudent/>} />
         <Route path="*" element={<Error404/>} />
+        <Route path="/student-data" element={<StudentData/>} />
       </Routes>
     </div>
   )
