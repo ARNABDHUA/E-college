@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../../Navbar";
 import { MCA } from "../../../assets/Assets";
 import axios from "axios";
@@ -22,6 +22,8 @@ const Mcalive = () => {
   useEffect(() => {
     const tname = localStorage.getItem("teachername");
     setTrack(tname);
+    // console.log(tname)
+    // console.log(fixt)
     axios
       .get("https://courseapi-3kus.onrender.com/api/products?sub=mcaLIVE")
       .then((res) => {
@@ -33,7 +35,17 @@ const Mcalive = () => {
 
   const submit = (e) => {
     e.preventDefault();
+    const today = new Date();
     const tname = localStorage.getItem("teachername");
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+const day = String(today.getDate()).padStart(2, '0');
+const year = String(today.getFullYear()).slice(-2); // Get the last two digits of the year
+
+// Combine into MM/DD/YY format
+const formattedDate = `${month}/${day}/${year}`;
+
+console.log(formattedDate); 
+    
     axios
       .post("https://courseapi-3kus.onrender.com/api/products", {
         name: video,
@@ -42,11 +54,20 @@ const Mcalive = () => {
         sub: "mcaLIVE",
         time: time,
         teacher: tname,
-        date: fixt,
+        date: formattedDate,
       })
       .then((res) => alert("Data is Added successfully"))
       .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    axios.get('https://courseapi-3kus.onrender.com/api/products?sub=mcaLIVE')
+    .then(res => {
+      // console.log(res.data.mydata)
+      setColumns(Object.keys(res.data.mydata))
+      setRecords(res.data.mydata)
+    })
+    .catch(err=>console.log(err))
+  }, [submit])
 
   const handelDelete = (_id) => {
     const confirm = window.confirm("Would you like to Delete?");
@@ -60,12 +81,19 @@ const Mcalive = () => {
     }
   };
 
-// Get today's date in 'MM/DD/YY' format for comparison
-const todayDate = new Date().toLocaleDateString("en-US").slice(0, 8) + new Date().getFullYear().toString().slice(-2);
+// Get today's date in MM/DD/YY format
+const today = new Date();
+const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+const day = String(today.getDate()).padStart(2, '0');
+const year = String(today.getFullYear()).slice(-2); // Get last two digits of the year
+const todayDate = `${month}/${day}/${year}`;
 
+// Filter records to show only those whose date matches today's date
+const filteredRecords = records.filter((record) => {
+  const recordDate = record.date?.trim(); // Ensure no extra spaces
+  return recordDate === todayDate;
+});
 
-  // Filter records to show only those whose date matches today's date
-  const filteredRecords = records.filter((record) => record.date === todayDate);
 
   return (
     <div>

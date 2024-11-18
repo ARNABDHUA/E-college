@@ -4,8 +4,10 @@ import axios from "axios";
 import StudentProfile from "./StudentProfile";
 import ErrorSection7 from "./ErrorSection7"; 
 import HashLoader from "react-spinners/HashLoader";
+import { useNavigate } from "react-router-dom";
 
 const Studentdashbord = () => {
+  const navigate = useNavigate();
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false); 
@@ -49,7 +51,7 @@ const Studentdashbord = () => {
   }
 
   if (showError) {
-    return <ErrorSection7 />;
+    navigate('/student');
   }
 
   return (

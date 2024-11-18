@@ -19,6 +19,8 @@ const Mcateacher = () => {
   const [records,setRecords]=useState([])
   const [check,setCheck]=useState(null)
   const [track,setTrack]=useState(null)
+  const [timek, setTimek] = useState(new Date());
+  const [fixt, setFixt] = useState(timek.toLocaleString().slice(0, 10));
   useEffect(()=>{
     const logp = localStorage.getItem('teacherlogs');
     const p = JSON.parse(logp);
@@ -36,7 +38,7 @@ const Mcateacher = () => {
   const submit=(e)=>{
     e.preventDefault()
     const tname = localStorage.getItem('teachername');
-    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mca","time":"00","teacher":tname})
+    axios.post('https://courseapi-3kus.onrender.com/api/products',{"name":video,"link":link,"subtitle":papers,"sub":"mca","time":"00","teacher":tname,"date":fixt})
     .then(res=>alert("Data is Added successfully"))
       .catch(err=>console.log(err))
   }

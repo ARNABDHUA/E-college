@@ -41,6 +41,12 @@ const Attendance = () => {
         .catch(err => console.log(err));
     }
   };
+  const today = new Date();
+const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+const day = String(today.getDate()).padStart(2, '0');
+const year = String(today.getFullYear()).slice(-2); // Get last two digits of the year
+const todayDate = `${month}/${day}/${year}`;
+console.log(todayDate)
 
   return (
     <>
@@ -70,10 +76,15 @@ const Attendance = () => {
             <th className="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               Present
             </th>
+            <th className="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              Total
+            </th>
           </tr>
         </thead>
         <tbody>
-          {datas.filter(ex => ex.date === dates)
+          {datas.filter((ex) => {
+            const recordDate = ex.date?.trim(); // Ensure no extra spaces
+            return recordDate === todayDate;})
           .map((row, index) => (
             <tr key={index} className="hover:bg-gray-100">
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">{row.sub}</td>
@@ -87,6 +98,9 @@ const Attendance = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
                 {datas.filter(e => e.roll === row.roll && e.paper === row.paper).length}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
+                {records.filter(e => e.subtitle === row.paper).length}
               </td>
             </tr>
           ))}
