@@ -79,13 +79,13 @@ const Display = () => {
         <Route path="/managementcontacts" element={<Managementcontacts/>} />
         <Route path="/student-register" element={<Addstudent/>} />
         <Route path="*" element={<Error404/>} />
-        <Route path="/" element={<StudentData/>} />
-        <Route path="/jee-main" element={<StudentData/>} />
+        <Route path="/student-data" element={<StudentData/>} />
+        {/* <Route path="/jee-main" element={<StudentData/>} />
         <Route path="/wb-jeca" element={<StudentData/>} />
         <Route path="/wb-jee" element={<StudentData/>} />
         <Route path="/gate" element={<StudentData/>} />
         <Route path="/ipmat" element={<StudentData/>} />
-        <Route path="/cat" element={<StudentData/>} />
+        <Route path="/cat" element={<StudentData/>} /> */}
       </Routes>
     </div>
   )

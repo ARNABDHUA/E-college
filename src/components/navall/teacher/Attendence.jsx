@@ -100,7 +100,7 @@ console.log(todayDate)
                 {datas.filter(e => e.roll === row.roll && e.paper === row.paper).length}
               </td>
               <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-                {records.filter(e => e.subtitle === row.paper).length}
+                {records.filter(e => e.subtitle === row.paper &&e.sub===row.sub).length}
               </td>
             </tr>
           ))}

@@ -122,7 +122,7 @@ const StudentsData = () => {
 
   // Filter students based on the selected stream
   const filteredStudents = selectedStream
-    ? students.filter((student) => student.course.includes(selectedStream))
+    ? students.filter((student) => student.course===selectedStream)
     : students;
 
   return (
@@ -174,6 +174,7 @@ const StudentsData = () => {
                 <tr className="bg-gray-300">
                   <th className="py-2 px-4 border-b border-gray-500">Name</th>
                   <th className="py-2 px-4 border-b border-gray-500">Roll Number</th>
+                  <th className="py-2 px-4 border-b border-gray-500">Course</th>
                   <th className="py-2 px-4 border-b border-gray-500">Start Date</th>
                   <th className="py-2 px-4 border-b border-gray-500">End Date</th>
                   <th className="py-2 px-4 border-b border-gray-500">Email</th>
@@ -186,6 +187,7 @@ const StudentsData = () => {
                   <tr key={student.email} className="hover:bg-gray-300">
                     <td className="py-2 px-4 border-b border-gray-500">{student.name}</td>
                     <td className="py-2 px-4 border-b border-gray-500">{student.roll}</td>
+                    <td className="py-2 px-4 border-b border-gray-500">{student.course}</td>
                     <td className="py-2 px-4 border-b border-gray-500">{student.starting}</td>
                     <td className="py-2 px-4 border-b border-gray-500">{student.end}</td>
                     <td className="py-2 px-4 border-b border-gray-500">{student.email}</td>
