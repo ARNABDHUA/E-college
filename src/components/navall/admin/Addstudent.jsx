@@ -7,40 +7,40 @@ import AdminNav from '../../AdminNav';
 const Data=[
     {
         id:1,
-        name:"mca"},
+        name:"MCA"},
     {
     id:2,
-    name:"bca"},
+    name:"BCA"},
     {
     id:3,
-    name:"btech"},
+    name:"MBA"},
     {
         id:4,
-        name:"mtech"},
+        name:"BTech"},
     {
             id:5,
-            name:"bba"},
+            name:"BBA"},
             {
                 id:6,
-                name:"mba"},
+                name:"MTech"},
                 {
                     id:7,
-                    name:"jeemain"},
+                    name:"JECA"},
                     {
                         id:8,
-                        name:"wbjeca"},
+                        name:"WBJEE"},
                         {
                             id:9,
-                            name:"wbjee"},
+                            name:"JEEMAIN"},
                             {
                                 id:10,
-                                name:"gate"},
+                                name:"GATE"},
                                 {
                                     id:11,
-                                    name:"ipmat"},
+                                    name:"IPMAT"},
                                     {
                                         id:12,
-                                        name:"cat"},
+                                        name:"CAT"},
 ]
 
 const Addstudent= ({ onSignUp }) => {
@@ -49,12 +49,16 @@ const Addstudent= ({ onSignUp }) => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [guardian, setGuardian] = useState('');
-  const [course,setCourse]=useState('');
+  const [coursex,setCoursex]=useState("");
   const [status,setStatus]=useState(true);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const [lock,setLock]=useState(false)
+  const [low,setLow]=useState("");
+  const [time, setTime] = useState(new Date().toLocaleString().slice(0,10));
+  const [fixt, setFixt] = useState("");
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -67,11 +71,16 @@ const Addstudent= ({ onSignUp }) => {
     };
     fetchStudents();
   }, []);
+  const handleChange = (event) => {
+    setCoursex(event.target.value);
+    
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
+    setLow(coursex.toLowerCase())
 
     const isEmailExist = students.some((student) => student.email === email);
     if (isEmailExist) {
@@ -80,6 +89,7 @@ const Addstudent= ({ onSignUp }) => {
       return;
     }
 
+    console.log(coursex)
     try {
       await axios.post('https://courseapi-3kus.onrender.com/api/register-student', {
         name,
@@ -89,7 +99,8 @@ const Addstudent= ({ onSignUp }) => {
         phonenumber: phone
       });
       alert('Registered successfully!');
-    //   navigate('/');
+      setLock(true)
+   
     } catch (error) {
       console.error('Error registering student:', error);
       setErrorMessage('Error registering. Please try again.');
@@ -97,16 +108,46 @@ const Addstudent= ({ onSignUp }) => {
       setLoading(false);
     }
   };
-  const handleChange = (event) => {
-    setCourse(event.target.value);
-    
+ 
+
+  const handleSubscription = async (e) => {
+    e.preventDefault();
+    alert("Unlock Id")
+    try {
+      // const logp = localStorage.getItem('logs');
+      // const p = JSON.parse(logp);
+      let change=parseInt(time.slice(6,10));
+        let changenew=change+2;
+        let enddate=changenew.toString();
+        let fast=time.slice(0,6);
+        let result=fast.concat(enddate)
+      await axios.put(`https://courseapi-3kus.onrender.com/api/student/${email}`, {"course":coursex, low: true ,"starting":time,"end":result});
+      setLock(false);
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage('Subscription failed. Please Login.');
+      console.error(error);
+    }
   };
+  const gotohome=()=>{
+    navigate("/admin-dashboard")
+  }
 
   return (
     <>
     <AdminNav/>
     <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      {lock? (<div className='flex flex-col gap-4'><button
+              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={handleSubscription}
+            >
+              Unlock Id
+            </button>
+            <button
+              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onClick={gotohome}
+            >
+              Go to home
+            </button></div>
+            ):(<div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">Student register</h2>
 
         {loading ? (
@@ -175,8 +216,8 @@ const Addstudent= ({ onSignUp }) => {
               />
             </div>
             <h3 className="mt-3">Course</h3>
-                  <select className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value={course} onChange={handleChange}>
-                    <option>--course--</option>
+                  <select className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value={coursex} onChange={handleChange}>
+                    <option >--course--</option>
                     {Data.map(sem => (
                       <option value={sem.name} key={sem.id}>{sem.name}</option>
                     ))}
@@ -185,11 +226,11 @@ const Addstudent= ({ onSignUp }) => {
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign Up
+              Generate Id
             </button>
           </form>
         )}
-      </div>
+      </div>)}
     </div>
     </>
   );
