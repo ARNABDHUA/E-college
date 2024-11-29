@@ -6,6 +6,7 @@ import Exam from './category/Exam'
 import Mentors from './category/Mentors'
 import Advertisement from './category/Advertisement'
 import Footer from './category/Footer'
+import ReviewsPage from './category/ReviewsPage'
 
 const DisplayHome = () => {
   return (
@@ -16,6 +17,7 @@ const DisplayHome = () => {
     <Advertisement/>
     <Exam/>
     <Mentors/>
+    <ReviewsPage/>
     <Footer/>
     </>
   )
