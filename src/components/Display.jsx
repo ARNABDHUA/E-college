@@ -38,7 +38,9 @@ import Managementcontacts from './navall/teacher/Managementcontacts'
 import Addstudent from './navall/admin/Addstudent'
 import Error404 from './Error404'
 import StudentData from './navall/admin/StudentData'
-import TeacherMarks from './navall/teacher/Teacher.Marks'
+import TeacherMarks from './navall/teacher/TeacherMarks'
+import MyMarks from './navall/student/Mymarks'
+import Atten from './navall/student/Atten'
 const Display = () => {
   return (
     <div>
@@ -76,12 +78,14 @@ const Display = () => {
         <Route path="/mcaeaxm@24" element={<Mcaexam/>} />
         <Route path="/mcateachereaxm@24" element={<Mcateacherexam/>} />
         <Route path="/attendence" element={<Attendence/>} />
-        <Route path="/mark" element={<Mark/>} />
+        {/* <Route path="/mark" element={<Mark/>} /> */}
         <Route path="/managementcontacts" element={<Managementcontacts/>} />
         <Route path="/student-register" element={<Addstudent/>} />
         <Route path="*" element={<Error404/>} />
         <Route path="/student-data" element={<StudentData/>} />
         <Route path="/mark" element={<TeacherMarks/>} />
+        <Route path="/my-marks" element={<MyMarks/>} />
+        <Route path="/my-atten" element={<Atten/>} />
         {/* <Route path="/jee-main" element={<StudentData/>} />
         <Route path="/wb-jeca" element={<StudentData/>} />
         <Route path="/wb-jee" element={<StudentData/>} />

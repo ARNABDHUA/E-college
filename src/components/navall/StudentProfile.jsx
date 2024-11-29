@@ -1,8 +1,10 @@
 import React from "react";
 import { FaUserGraduate } from "react-icons/fa";
 import ErrorSection7 from "./ErrorSection7";
+import { useNavigate } from "react-router-dom";
 
 const StudentProfile = ({ student }) => {
+  const navigate = useNavigate();
   if (!student) {
     return <ErrorSection7 />; // If student data is not passed or still loading
   }
@@ -83,10 +85,10 @@ const StudentProfile = ({ student }) => {
 
         {/* Action Buttons */}
         <div className="flex justify-center space-x-6">
-          <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full shadow-md transition-all transform hover:scale-105">
+          <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full shadow-md transition-all transform hover:scale-105" onClick={() => navigate('/my-atten')}>
             View Attendance
           </button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full shadow-md transition-all transform hover:scale-105">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full shadow-md transition-all transform hover:scale-105"onClick={() => navigate('/my-marks')}>
             View Result
           </button>
         </div>
